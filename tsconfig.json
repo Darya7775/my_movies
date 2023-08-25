@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    // Разрешить импортировать файлы JavaScript
+    "allowJs": true,
+    // ограничение взаимодействия
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    // указывает где будет создан файл index.js
+    "outDir": "build",
+  },
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build/**/*"]
+}
