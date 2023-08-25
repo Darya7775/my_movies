@@ -1,4 +1,6 @@
 .DS_Store
+.firebase
+.github
 .idea
 .vscode
 package-lock.json
