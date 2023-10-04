@@ -8,8 +8,13 @@
     "jsx": "react-jsx",
     // указывает где будет создан файл index.js
     "outDir": "build",
+    "target": "ES2015",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "swiper.d.ts"],
   "exclude": ["node_modules", "build/**/*"]
 }

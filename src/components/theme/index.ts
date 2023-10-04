@@ -1,0 +1,16 @@
+export const theme = {
+  colorFont: "#333333",
+  colorWhite: "#ffffff",
+  colorBlue: "#0b3dcb",
+  colorGrey: "#d2d3d6",
+  colorRed: "#d34b4b",
+  colorLightGreen: "#8aed95",
+  colorActiveLink: "#b3c7f0",
+  colorScrollbarTrack: "#d6ddeb",
+  colorScrollbarThumb: "#7fa5f3",
+  ffRaleway: "'Raleway', 'Arial', sans-serif",
+  indent: "96px",
+  indentDesktop: "64px",
+  indentMobile: "8px",
+  indentTablet: "16px",
+};

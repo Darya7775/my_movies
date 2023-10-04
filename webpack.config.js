@@ -35,6 +35,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.css$/,
+        use: 'css-loader'
+      },
     ],
   },
   resolve: {
@@ -47,6 +51,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      base: '/'
     }),
   ],
   devtool: 'inline-source-map',

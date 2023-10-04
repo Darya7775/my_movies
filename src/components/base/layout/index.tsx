@@ -1,14 +1,16 @@
-import React from "react";
+import React, { memo } from "react";
 import Header from "../header";
+import Authorization from "../authorization";
 import { Outlet } from "react-router-dom";
 
-function Layout() {
+const Layout: React.FC = () => {
   return (
     <>
+      <Authorization />
       <Header />
       <Outlet />
     </>
   );
 }
 
-export default Layout;
+export default memo(Layout);
