@@ -2,7 +2,7 @@ import { useState, useLayoutEffect } from "react";
 
 const queries = [
   '(max-width: 47.97em)',
-  '(max-width: 63.97em)',
+  '(min-width: 47.97em)',
   '(min-width: 63.97em)',
 ];
 

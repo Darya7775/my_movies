@@ -40,10 +40,6 @@ const Slider: React.FC<Props> = (props: Props) => {
       slidesPerGroup: 3,
       loop: true,
       spaceBetween: 5,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false
-      },
       navigation: {
         nextEl: ".next",
         prevEl: ".prev",
@@ -59,19 +55,23 @@ const Slider: React.FC<Props> = (props: Props) => {
         },
         625: {
           slidesPerView: 6,
+          slidesPerGroup: 6,
         },
         767: {
           slidesPerView: 7,
+          slidesPerGroup: 7,
         },
-        1024: {
-          slidesPerView: 5,
-          slidesPerGroup: 5,
+        1366: {
+          slidesPerView: 10,
+          slidesPerGroup: 10,
         },
         1600: {
-          slidesPerView: 7,
+          slidesPerView: 14,
+          slidesPerGroup: 14,
         },
         1920: {
-          slidesPerView: 9,
+          slidesPerView: 17,
+          slidesPerGroup: 17,
         },
       },
     };

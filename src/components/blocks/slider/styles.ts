@@ -52,6 +52,10 @@ export const Prev = styled.button`
   left: 0;
 
   @media (min-width: ${screen._768_PX}) {
+    left: -15px;
+  }
+
+  @media (min-width: ${screen._1024_PX}) {
     left: -25px;
   }
 
@@ -71,6 +75,10 @@ export const Next = styled.button`
   transform: rotate(180deg);
 
   @media (min-width: ${screen._768_PX}) {
+    right: -15px;
+  }
+
+  @media (min-width: ${screen._1024_PX}) {
     right: -25px;
   }
 

@@ -1,7 +1,25 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Button from "../../ui/button";
 import ButtonCross from "../../ui/button_cross";
 import * as screen from "../../../styles/constants";
+import abacus from "../../../assets/abacus.svg";
+
+const styleWrapper = css`
+  display: flex;
+  gap: 5px;
+
+  input {
+    height: 100%;
+  }
+
+  @media (min-width: ${screen._768_PX}) {
+    justify-content: space-between;
+  }
+
+  @media (min-width: ${screen._1024_PX}) {
+    gap: 8px;
+  }
+`;
 
 export const FormSearch = styled.form`
   width: 100vw;
@@ -15,13 +33,15 @@ export const FormSearch = styled.form`
   gap: 5px;
 
   @media (min-width: ${screen._768_PX}) {
-    position: static;
+    position: relative;
+    top: 0;
+
     width: fit-content;
+    flex-direction: row;
   }
 
   @media (min-width: ${screen._1024_PX}) {
     flex-direction: row;
-    grid-area: 1/2/2/-1;
     gap: 15px;
   }
 
@@ -42,18 +62,37 @@ export const ButtonCloseSearch = styled(ButtonCross)`
 `;
 
 export const Wrapper = styled.div`
-  display: flex;
-  gap: 5px;
+  ${styleWrapper};
+`;
 
-  input {
-    height: 100%;
+export const WrapperSelect = styled.div`
+  ${styleWrapper};
+
+  &[data-open="false"] {
+    display: none;
+  }
+
+  &[data-open="true"] {
+    display: flex;
   }
 
   @media (min-width: ${screen._768_PX}) {
-    justify-content: space-between;
+    position: absolute;
+    top: 115%;
   }
+`;
 
-  @media (min-width: ${screen._1024_PX}) {
-    gap: 8px;
+export const ButtonOptions = styled.button`
+  display: block;
+  width: 42px;
+  border: none;
+  background: url(${abacus}) 0 no-repeat;
+
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: ${props => props.theme.colorActiveLink};
+    }
   }
 `;

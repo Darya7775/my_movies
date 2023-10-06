@@ -26,8 +26,6 @@ export const ListCategories = styled.ul`
 
   @media (min-width: ${screen._1024_PX}) {
     grid-template-columns: repeat(4, 1fr);
-    grid-area: 2/2/-1/-1;
-
     gap: 10px;
   }
 

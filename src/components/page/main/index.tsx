@@ -11,14 +11,12 @@ const Main: React.FC = () => {
   useInit(async () => {
     dispatch(initParams());
     const query = store.getState().movies.params.q;
-    console.log("main useInit")
     if(query !== "") {
       await dispatch(fetchSearchMovie(true));
     } else {
       await dispatch(fetchMovie(true));
     }
   }, [], true)
-  console.log("main")
 
   return (
     <main>

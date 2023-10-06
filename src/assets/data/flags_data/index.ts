@@ -39,6 +39,7 @@ import hong_kong from "../../flags/hong_kong.svg";
 import honduras from "../../flags/honduras.svg";
 import indonesia from "../../flags/indonesia.svg";
 import ireland from "../../flags/ireland.svg";
+import iceland from "../../flags/iceland.svg";
 import india from "../../flags/india.svg";
 import italy from "../../flags/italy.svg";
 import japan from "../../flags/japan.svg";
@@ -117,7 +118,7 @@ const contryes: list = {
   "IN": india,
   "IT": italy,
   "IL": israel,
-  "": "iceland",
+  "IS": iceland,
   "JP": japan,
   "LB": lebanon,
   "LT": lithuania,

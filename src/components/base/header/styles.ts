@@ -26,13 +26,9 @@ export const HeaderContainer = styled(Container)`
   align-items: center;
 
   @media (min-width: ${screen._1024_PX}) {
-    padding-top: 20px;
-    padding-bottom: 20px;
-
     display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 20px 50px;
+    grid-template-columns: max-content 1fr 46%;
+    gap: 5px 30px;
   }
 
   @media (min-width: ${screen._1280_PX}) {
@@ -44,8 +40,8 @@ export const HeaderContainer = styled(Container)`
   }
 
   @media (min-width: ${screen._1920_PX}) {
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 
   @media (min-width: ${screen._2500_PX}) {
@@ -66,7 +62,7 @@ export const Logo = styled(Link)`
     }
   }
 
-  @media (min-width: ${screen._1024_PX}) {
+  /* @media (min-width: ${screen._1024_PX}) {
     grid-area: 1/1/-1/2;
-  }
+  } */
 `;

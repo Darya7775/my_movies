@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import Container from "../../ui/container";
 import * as screen from "../../../styles/constants";
+import { size } from "../../../styles/mixins";
 
 const point = css`
   position: relative;
@@ -42,10 +43,9 @@ const listCss = css`
 
 //  стили по тегам
 export const PageMovieSection = styled.section`
+  ${size};
   width: 100%;
   margin: 20px 0;
-
-  font-size: clamp(1em, 1.2em, 1.5em);
 
   display: flex;
   flex-direction: column;
@@ -177,6 +177,8 @@ export const NoComProd = styled.span`
 
 export const ListGenres = styled.ul`
   ${listCss};
+
+  flex-wrap: wrap;
 `;
 
 export const ItemPageMovie = styled.li`
@@ -217,7 +219,7 @@ export const TemplateCast = styled.div`
     -webkit-line-clamp: 2;
 
     @media (min-width: ${screen._1024_PX}) {
-      height: 37px;
+      height: 50px;
     }
   }
 
@@ -232,10 +234,14 @@ export const TemplateCast = styled.div`
     @media (min-width: ${screen._1024_PX}) {
       max-height: 30px;
     }
+
+    @media (min-width: ${screen._1366_PX}) {
+      max-height: 28px;
+    }
   }
 
-  @media (min-width: ${screen._1024_PX}) {
-    min-height: 390px;
+  @media (min-width: ${screen._768_PX}) {
+    min-height: 240px;
   }
 `;
 

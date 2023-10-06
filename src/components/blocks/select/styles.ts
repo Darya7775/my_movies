@@ -53,6 +53,7 @@ export const SelectStyle = styled.ul`
   }
 
   @media (min-width: ${screen._768_PX}) {
+    max-height: 150px;
     position: absolute;
     top: 0;
     left: 0;

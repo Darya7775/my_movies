@@ -20,7 +20,7 @@ const MoviePage: React.FC = () => {
     (async() => {
       await dispatch(fetchOneMovie(idmovie));
     })();
-  }, []);
+  }, [idmovie]);
 
   let content;
   if(status === "loading") {

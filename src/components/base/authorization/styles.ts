@@ -7,8 +7,8 @@ export const Wrapper = styled(Container)`
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   ${mix.size};
 `;
