@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/too
 import * as T from "./types";
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from "../store";
-import conversionMovie from "../utils/movie_conversion";
+import { conversionMovie } from "../utils/movie_conversion";
 import options from "./headers_fetch";
 
 const initialState: T.StateMovies = {
@@ -21,7 +21,7 @@ const initialState: T.StateMovies = {
   error: ""
 };
 
-const moviesAdapter = createEntityAdapter();
+const moviesAdapter = createEntityAdapter<T.OneMovieMain>();
 
 moviesAdapter.getInitialState(initialState);
 
@@ -46,7 +46,6 @@ export const fetchMovie = createAppAsyncThunk("movie/categories", async (replace
   if(replaceHistory) {
     window.history.replaceState({}, '', url);
   } else {
-    console.log(`"fetMov" ${url}`)
     window.history.pushState({}, '', url);
   }
 

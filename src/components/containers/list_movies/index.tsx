@@ -2,7 +2,7 @@ import React, { memo, useCallback } from "react";
 import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
 import { addCurrentPage, fetchSearchMovie, fetchMovie, selectMovieById } from "../../../slices_redux/movie_slice";
-import MoviesList from "../../blocks/list";
+import MoviesList from "../../blocks/list_card";
 import Pagination from "../../blocks/pagination";
 import Spinner from "../../ui/spinner";
 import Error from "../../ui/error";

@@ -7,6 +7,7 @@ import { getDataUser } from "../../../slices_redux/user_slice";
 
 import MenuProfile from "../../blocks/menu_profile";
 import Error from "../../ui/error";
+import LinkStyle from "../../ui/link_router";
 import * as S from "./styles";
 
 const Authorization: React.FC = () => {
@@ -43,8 +44,8 @@ const Authorization: React.FC = () => {
       {auth.currentUser !== null
         ? <MenuProfile lettera={lettera} signOut={callbacks.onSingOut} />
         : <>
-            <S.AutLinkSingIn to="/login">Login</S.AutLinkSingIn>
-            <S.AutLinkSingIn to="/register">Register now</S.AutLinkSingIn>
+            <LinkStyle to="/login">Login</LinkStyle>
+            <LinkStyle to="/register">Register now</LinkStyle>
           </>
       }
     </S.Wrapper>

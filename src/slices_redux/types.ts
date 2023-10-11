@@ -13,23 +13,24 @@ export interface StateUser extends DataUSer {
 }
 
 export interface OneMovieMain {
-  id: number,
+  readonly id: number,
   backdrop_path: string,
   genre_ids: string[],
   poster_path: string,
   vote_average: number,
   title: string,
-  release_date: string
+  release_date: string,
+  isFav: boolean
 }
 
 export interface StateMovies {
   status: FetchingStatus,
   count: number,
   error: string | undefined,
-  ids: number[],
+  readonly ids: number[],
   choosedCategory: string
   entities: {
-    [key: string]: object
+    [key: string]: OneMovieMain
   },
   params: {
     q: string,
@@ -55,7 +56,7 @@ export interface NormalGenresTypes {
 }
 
 export interface OneMoviePage {
-  id: number,
+  readonly id: number,
   adult: boolean,
   backdrop_path: string,
   genres: {
@@ -98,7 +99,8 @@ export interface OneMoviePage {
   },
   recommendations: {
     results: OneMovieMain[]
-  }
+  },
+  isFav: boolean
 }
 
 export interface StateOneMoviePage {
@@ -110,3 +112,19 @@ export interface StateOneMoviePage {
     [key: string]: object
   }
 };
+
+export interface FavInMovOne {
+  readonly id: number,
+  backdrop_path: string,
+  genres: {
+    id: number,
+    name: string
+  }[],
+  poster_path: string,
+  vote_average: number,
+  title: string,
+  release_date: string,
+  isFav: boolean
+}
+
+export interface StateFavoritesMovies { arrayMovies: Array<OneMovieMain | FavInMovOne> };

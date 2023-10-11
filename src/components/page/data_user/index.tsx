@@ -60,14 +60,20 @@ const DataUser: React.FC = () => {
       }
     }, [auth.currentUser])
   };
+  // задержка для success
+  const delay = (arg: JSX.Element, arg2: (ar: "") => void) => {
+    const deb = debounce((set: typeof arg2) => set(""), 3000)
+    deb(arg2);
+    return arg;
+  };
 
   return(
     <main>
       <Container>
         <Form method="POST" onSubmit={handleSubmit(callbacks.onSubmit)}>
-          {success && <Success>{success}</Success>}
+          {success &&  delay(<Success>{success}</Success>, setSuccess)}
           {error && <Error>{error}</Error>}
-          {successDelete && <Success>{successDelete}</Success>}
+          {successDelete && delay(<Success>{successDelete}</Success>, setSuccessDelete)}
           {errorDelete && <Error>{errorDelete}</Error>}
 
           <WrapperInput>

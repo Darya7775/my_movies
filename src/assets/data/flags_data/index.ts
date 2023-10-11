@@ -32,6 +32,7 @@ import estonia from "../../flags/estonia.svg";
 import egypt from "../../flags/egypt.svg";
 import greece from "../../flags/greece.svg";
 import guatemala from "../../flags/guatemala.svg";
+import georgia from "../../flags/georgia.svg";
 import ghana from "../../flags/ghana.svg";
 import finland from "../../flags/finland.svg";
 import hungary from "../../flags/hungary.svg";
@@ -72,6 +73,7 @@ import belarus from "../../flags/belarus.svg";
 import belize from "../../flags/belize.svg";
 import ukraine from "../../flags/ukraine.svg";
 import qatar from "../../flags/qatar.svg";
+import south_korea from "../../flags/south_korea.svg";
 
 type list = {
   [key: string]: any
@@ -107,6 +109,7 @@ const contryes: list = {
   "GB": united_kingdom,
   "GR": greece,
   "GT": guatemala,
+  "GE": georgia,
   "GH": ghana,
   "FR": france,
   "FI": finland,
@@ -149,6 +152,7 @@ const contryes: list = {
   "TW": taiwan,
   "VE": venezuela,
   "ZA": south_africa,
+  "KOR": south_korea,
   "UG": uganda,
   "UA": ukraine,
   "US": usa,

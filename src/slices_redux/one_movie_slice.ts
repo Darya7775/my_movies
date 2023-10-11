@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import type { EntityAdapter } from '@reduxjs/toolkit'
 import options from "./headers_fetch";
 import type { RootState } from "../store";
-import conversionMovie from "../utils/movie_conversion";
+import { conversionMovie, addMarketFavOneMov } from "../utils/movie_conversion";
 import * as T from "./types";
 
 export const fetchOneMovie = createAsyncThunk("oneMovie/fetch",async (idMovie: string): Promise<T.OneMoviePage> => {
@@ -15,7 +14,7 @@ export const fetchOneMovie = createAsyncThunk("oneMovie/fetch",async (idMovie: s
     data.credits.cast = data.credits.cast.slice(0, 20);
     data.credits.crew = data.credits.crew.slice(0, 20);
     data.recommendations.results = conversionMovie(data.recommendations.results, dataGenres);
-    return data;
+    return addMarketFavOneMov(data);
   } catch (error: any) {
     throw error.message;
   }
@@ -48,7 +47,8 @@ const initialState: T.StateOneMoviePage = {
     },
     recommendations: {
       results: []
-    }
+    },
+    isFav: false
   }
 };
 

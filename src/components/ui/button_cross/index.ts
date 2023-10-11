@@ -17,6 +17,9 @@ const closeСross = css`
 const ButtonCross = styled(Button)`
   position: relative;
 
+  width: 40px;
+  height: 40px;
+
   &:after {
     ${closeСross};
     rotate: 45deg;

@@ -51,6 +51,8 @@ export const PageMovieSection = styled.section`
   flex-direction: column;
   gap: 20px;
 
+  position: relative;
+
   h3 {
     margin: 0;
 
@@ -81,6 +83,8 @@ export const PageMovieSection = styled.section`
 `;
 
 export const ContainerPageMovie = styled(Container)`
+  position: relative;
+
   display: grid;
   gap: 5px;
 
@@ -181,7 +185,7 @@ export const ListGenres = styled.ul`
   flex-wrap: wrap;
 `;
 
-export const ItemPageMovie = styled.li`
+export const ItemGenre = styled.li`
   display: flex;
   align-items: center;
 
@@ -250,4 +254,9 @@ export const ImgCast = styled.img`
   width: 100%;
   object-fit: contain;
   height: auto;
+`;
+
+export const WrapHeart = styled(Container)`
+  display: flex;
+  justify-content: end;
 `;

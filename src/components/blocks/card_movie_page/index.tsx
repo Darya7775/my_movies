@@ -5,26 +5,33 @@ import noPoster from "../../../assets/no_poster.png";
 import contryes from "../../../assets/data/flags_data";
 import woman from "../../../assets/woman.jpg";
 import man from "../../../assets/man.jpg";
-import ListRecommendations from "../list";
+import ListRecommendations from "../list_card";
 import Slider from "../slider";
 import MyYouTube from "../youtube";
 import * as S from "./styles";
 import Container from "../../ui/container";
+import Heart from "../heart";
+import Tooltip from "../tooltip";
 
 interface Props {
   movie: OneMoviePage,
   recommendationsMovieIds: number[],
+  onAdd: () => void,
+  onDelete: () => void,
+  markOpen: boolean,
+  auth: null | object,
   // @todo сделать
   select: any
 }
 
-const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select }: Props) => {
+const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select, onAdd, onDelete, markOpen, auth }: Props) => {
   const { isMobile } = useMactchMedia() as { isMobile: boolean };
   const itemsCastCrew = [...movie.credits.cast, ...movie.credits.crew];
 
-  console.log(movie)
   return(
     <S.PageMovieSection>
+      {auth === null &&  <Tooltip markOpen={markOpen}/>}
+      <S.WrapHeart><Heart isFav={movie.isFav} onAdd={() => onAdd()} onDelete={() => onDelete()}></Heart></S.WrapHeart>
 
       <S.ContainerPageMovie>
         {isMobile
@@ -41,9 +48,9 @@ const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select }: Props
           <S.ListGenres>
             {movie.genres.length
               ? movie.genres.map((genre, i) => (
-                  <S.ItemPageMovie key={i}>
+                  <S.ItemGenre key={i}>
                     {genre.name}
-                  </S.ItemPageMovie>
+                  </S.ItemGenre>
                 ))
               : null
             }

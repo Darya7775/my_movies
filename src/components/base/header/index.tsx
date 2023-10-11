@@ -23,7 +23,6 @@ const Header: React.FC = () => {
     // отправка запроса на искомые фильмы
     onSubmit: useCallback(async(e: React.SyntheticEvent) => {
       e.preventDefault();
-      console.log("form")
       dispatch(addCurrentPage(1));
       await dispatch(fetchSearchMovie(false));
     }, []),
