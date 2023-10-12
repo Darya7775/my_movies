@@ -36,7 +36,7 @@ const FavoritesMovies: React.FC = () => {
             </li>
           ))}
         </List>
-        <Button type="button" onClick={callbacks.onDeleteAllMovies}>dellet</Button>
+        <Button type="button" onClick={callbacks.onDeleteAllMovies}>Сlear out</Button>
       </Container>
     </main>
   );
