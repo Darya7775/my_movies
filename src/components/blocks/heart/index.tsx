@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import useMactchMedia from "../../../hooks/use-match-media";
 import ButtonHeart from "./styles";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const Heart: React.FC<Props> = (props: Props) => {
+  const { isDesktop } = useMactchMedia() as { isDesktop: boolean };
   const [ favMov, setFavMov ] = useState(props.isFav);
 
   const callbacks = {
@@ -29,7 +31,7 @@ const Heart: React.FC<Props> = (props: Props) => {
       type="button"
       data-fav={favMov ? "true" : "false"}
       aria-label={favMov ? "Remove from favorites" : "Add to favorites"}
-      title={favMov ? "Remove from favorites" : "Add to favorites"}
+      {...(isDesktop ? {title: favMov ? "Remove from favorites" : "Add to favorites"} : {})}
       onClick={() => {favMov ? callbacks.onDelete() : callbacks.onAdd()}}>
       {props.children}
     </ButtonHeart>
