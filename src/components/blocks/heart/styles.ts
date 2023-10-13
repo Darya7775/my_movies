@@ -19,6 +19,8 @@ const ButtonHeart = styled.button`
   &[data-fav="false"] {
     background-image: url(${heart});
   }
+
+  transition: background-image 1s;
 `;
 
 export default ButtonHeart;

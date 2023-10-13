@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import useMactchMedia from "../../../hooks/use-match-media";
 import * as S from "./styles";
 
@@ -55,4 +55,4 @@ const MenuProfile: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default MenuProfile;
+export default memo(MenuProfile);

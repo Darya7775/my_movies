@@ -98,6 +98,7 @@ export const ListUserLink = styled(Link)`
   @media (hover:hover) {
     &:hover {
       text-shadow: 0 0 5px ${props => props.theme.colorBlue};
+      transition: text-shadow 1s;
     }
   }
 `;

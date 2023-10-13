@@ -11,10 +11,11 @@ const itemStyle = css`
   font-size: 1.5em;
   line-height: 150%;
 
-
-  // redid
-  &:hover {
-    opacity: 0.6;
+  @media (hover: hover) {
+    &:hover {
+      background-color: ${props => props.theme.colorActiveLink};
+      transition: background-color 1s;
+    }
   }
 
   @media(max-width: 63.94em) {
@@ -46,7 +47,9 @@ export const LinkActivePage = styled(Link)`
   ${itemStyle};
 
   color: ${props => props.theme.colorWhite};
-  background-color: ${props => props.theme.colorActiveLink};
+  background-color: ${props => props.theme.colorBlue};
+
+  pointer-events: none;
 `;
 
 export const LinkPage = styled(Link)`

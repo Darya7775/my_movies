@@ -93,6 +93,7 @@ export const ButtonOptions = styled.button`
   @media (hover: hover) {
     &:hover {
       background-color: ${props => props.theme.colorActiveLink};
+      transition: background-color 1s;
     }
   }
 `;
