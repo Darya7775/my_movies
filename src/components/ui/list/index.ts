@@ -8,6 +8,10 @@ const List = styled.ul`
   display: grid;
   gap: 5px;
   justify-items: center;
+
+  &[data-nested="true"] {
+    margin-left: 32px;
+  }
 `;
 
 export default List;

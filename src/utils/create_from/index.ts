@@ -1,4 +1,4 @@
-import * as T from "../../slices_redux/types";
+import * as T from "../../types";
 
 /**
  * универсальная функция для создания объекта с нужными ключами

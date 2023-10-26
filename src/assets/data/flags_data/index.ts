@@ -152,7 +152,7 @@ const contryes: list = {
   "TW": taiwan,
   "VE": venezuela,
   "ZA": south_africa,
-  "KOR": south_korea,
+  "KR": south_korea,
   "UG": uganda,
   "UA": ukraine,
   "US": usa,

@@ -1,4 +1,4 @@
-import * as T from "../../slices_redux/types";
+import * as T from "../../types";
 import createMovieFrom from "../create_from";
 
 interface LocalStorage {
@@ -26,3 +26,12 @@ export const deleteLocalStorageMovie = (idMovie: number) => {
 export const deleteLocalStorageAllMovie = () => {
   localStorage.removeItem("favoritesMovies");
 };
+
+// // для указания последнео номера документа
+// export const addLastDoc = (numberDoc: string) => {
+//   localStorage.setItem("addLastDoc", JSON.stringify(numberDoc));
+// };
+
+// export const deleteLastDoc = () => {
+//   localStorage.removeItem("addLastDoc");
+// };

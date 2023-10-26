@@ -9,7 +9,7 @@ import useAppSelector from "../../../hooks/use-selector";
 import Spinner from "../../ui/spinner";
 import Error from "../../ui/error";
 import PageCardMovie from "../../blocks/card_movie_page";
-import * as T from "../../../slices_redux/types";
+import * as T from "../../../types";
 
 const MoviePage: React.FC = () => {
   const dispatch = useAppDispatch();

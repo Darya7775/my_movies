@@ -255,8 +255,3 @@ export const ImgCast = styled.img`
   object-fit: contain;
   height: auto;
 `;
-
-export const WrapHeart = styled(Container)`
-  display: flex;
-  justify-content: end;
-`;

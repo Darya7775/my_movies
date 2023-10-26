@@ -3,12 +3,11 @@ import type { RootState } from "../../../store";
 import { auth } from "../../../firebase/firebase";
 import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
-import { OneMovieMain } from "../../../slices_redux/types";
 import { addMovie, deleteMovie } from "../../../slices_redux/favorites_movies_slice";
 import { addLocalStorageMovie, deleteLocalStorageMovie } from "../../../utils/local_storage";
 import noPoster from "../../../assets/no_poster.png";
 import Heart from "../../blocks/heart";
-import * as T from "../../../slices_redux/types";
+import * as T from "../../../types";
 import * as S from "./styles";
 import Tooltip from "../../blocks/tooltip";
 
@@ -19,7 +18,7 @@ interface Props {
 
 const CardMovie: React.FC<Props> = (props: Props) => {
   const dispatch = useAppDispatch();
-  const movie = useAppSelector(state => props.select(state, props.movieId)) as OneMovieMain;
+  const movie = useAppSelector(state => props.select(state, props.movieId)) as T.OneMovieMain;
   const [ prompt, setPrompt ] = useState(false);
 
   const callbacks = {

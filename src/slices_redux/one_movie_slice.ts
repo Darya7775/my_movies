@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/too
 import options from "./headers_fetch";
 import type { RootState } from "../store";
 import { conversionMovie, addMarketFavOneMov } from "../utils/movie_conversion";
-import * as T from "./types";
+import * as T from "../types";
 
 export const fetchOneMovie = createAsyncThunk("oneMovie/fetch",async (idMovie: string): Promise<T.OneMoviePage> => {
   try {
@@ -52,7 +52,7 @@ const initialState: T.StateOneMoviePage = {
   }
 };
 
-const oneMovieRecommendAdapter = createEntityAdapter();
+const oneMovieRecommendAdapter = createEntityAdapter<T.OneMovieMain>();
 oneMovieRecommendAdapter.getInitialState(initialState);
 
 const oneMovieSlice = createSlice({

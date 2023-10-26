@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import * as T from "./types";
+import * as T from "../types";
 
 const initialStateLocal = () => {
   if(localStorage.getItem("favoritesMovies")) {

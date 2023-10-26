@@ -1,6 +1,6 @@
-import React, { memo } from "react";
-import { OneMoviePage } from "../../../slices_redux/types";
+import React, { memo, useRef } from "react";
 import useMactchMedia from "../../../hooks/use-match-media";
+import MovieReviews from "../../containers/movie_ reviews";
 import noPoster from "../../../assets/no_poster.png";
 import contryes from "../../../assets/data/flags_data";
 import woman from "../../../assets/woman.jpg";
@@ -12,26 +12,35 @@ import * as S from "./styles";
 import Container from "../../ui/container";
 import Heart from "../heart";
 import Tooltip from "../tooltip";
+import * as T from "../../../types";
+import type { RootState } from "../../../store";
+import Button from "../../ui/button";
+import Wrapper from "../../ui/wrapper";
 
 interface Props {
-  movie: OneMoviePage,
+  movie: T.OneMoviePage,
   recommendationsMovieIds: number[],
   onAdd: () => void,
   onDelete: () => void,
   markOpen: boolean,
   auth: null | object,
-  // @todo сделать
-  select: any
+  select: (state: RootState, id: number) => T.OneMovieMain | undefined
 }
 
 const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select, onAdd, onDelete, markOpen, auth }: Props) => {
   const { isMobile } = useMactchMedia() as { isMobile: boolean };
   const itemsCastCrew = [...movie.credits.cast, ...movie.credits.crew];
+  const scrollToRef = useRef<HTMLDivElement>(null);
 
   return(
     <S.PageMovieSection>
       {auth === null &&  <Tooltip markOpen={markOpen}/>}
-      <S.WrapHeart><Heart isFav={movie.isFav} onAdd={() => onAdd()} onDelete={() => onDelete()}></Heart></S.WrapHeart>
+      <Container>
+        <Wrapper>
+          <Button type="button" onClick={() => scrollToRef.current?.scrollIntoView({behavior:"smooth"})}>Reviews</Button>
+          <Heart isFav={movie.isFav} onAdd={() => onAdd()} onDelete={() => onDelete()}></Heart>
+        </Wrapper>
+      </Container>
 
       <S.ContainerPageMovie>
         {isMobile
@@ -83,6 +92,10 @@ const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select, onAdd, 
         ? (<MyYouTube videoId={movie.videos.results.find(video => video.type === "Trailer")?.key} />)
         : null
       }
+
+      <Container ref={scrollToRef}>
+        <MovieReviews />
+      </Container>
 
       {itemsCastCrew.length
         ? <S.ContainerCast>

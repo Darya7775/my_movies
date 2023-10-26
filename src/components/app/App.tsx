@@ -26,7 +26,8 @@ const App: React.FC = () => {
 
           <Route path={"/"} element={<Navigate replace to={"/:id"} />} />
           <Route path={"/:id"} element={<Main />} />
-          <Route path={"/movie/:idmovie"} element={<MoviePage />} />
+
+          <Route path={"/movie/:idmovie/"} element={<MoviePage />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/data_user"} element={<Protected redirect="/login"><DataUser /></Protected>} />

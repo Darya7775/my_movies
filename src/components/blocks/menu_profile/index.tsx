@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import useMactchMedia from "../../../hooks/use-match-media";
 import * as S from "./styles";
 
@@ -10,6 +10,14 @@ interface Props {
 const MenuProfile: React.FC<Props> = (props: Props) => {
   const { isMobile } = useMactchMedia() as { isMobile: boolean };
   const [ stateMenu, setStateMenu ] = useState(false);
+
+  useEffect(() => {
+    if (stateMenu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+ }, [stateMenu]);
 
   return(
     <>

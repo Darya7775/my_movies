@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import * as T from "./types";
+import * as T from "../types";
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from "../store";
 import { conversionMovie } from "../utils/movie_conversion";

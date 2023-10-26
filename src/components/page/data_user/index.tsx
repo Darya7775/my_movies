@@ -4,6 +4,7 @@ import { auth } from "../../../firebase/firebase";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash.debounce";
+import delay from "../../../utils/delay";
 
 import Button from "../../ui/button";
 import WrapperInput from "../../ui/wrapper_input";
@@ -60,12 +61,6 @@ const DataUser: React.FC = () => {
       }
     }, [auth.currentUser])
   };
-  // задержка для success
-  const delay = (arg: JSX.Element, arg2: (ar: "") => void) => {
-    const deb = debounce((set: typeof arg2) => set(""), 3000)
-    deb(arg2);
-    return arg;
-  };
 
   return(
     <main>
@@ -86,7 +81,7 @@ const DataUser: React.FC = () => {
                 pattern: {
                   message: "Only letters and hyphen",
                   value: /^[A-Z]([a-z]| |-|[A-Z]){1,50}$/
-              }
+                }
             })} />
           </WrapperInput>
 

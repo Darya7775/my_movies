@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import type { RootState } from "../../../store";
 import CardMovie from "../../containers/card_movie";
-import * as T from "../../../slices_redux/types";
+import * as T from "../../../types";
 import * as S from "./styles";
 
 interface Props {

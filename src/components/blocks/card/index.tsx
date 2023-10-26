@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import noPoster from "../../../assets/no_poster.png";
 import Heart from "../../blocks/heart";
-import * as T from "../../../slices_redux/types";
+import * as T from "../../../types";
 import * as S from "./styles";
 
 interface Props {
