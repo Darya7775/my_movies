@@ -8,7 +8,7 @@ import FormReview from "../form_review";
 import * as T from "../../../types";
 
 import LinkStyle from "../../ui/link_router";
-import ButtonCross from "../../ui/button_cross";
+// import ButtonCross from "../../ui/button_cross";
 import Spinner from "../../ui/spinner";
 import Button from "../../ui/button";
 import Modal from "../../blocks/modal";
@@ -23,7 +23,7 @@ const MovieReviews: React.FC = () => {
   const { idmovie } = useParams() as { idmovie: string };
   const { isMobile } = useMactchMedia() as { isMobile: boolean };
 
-  const [ stateReviews, setStateReviews ] = useState(false); // флаг открытия/закрытия сукции на mobile
+  const [ stateReviews, setStateReviews ] = useState(false); // флаг открытия/закрытия секции на mobile
   const [ reviews, setReviews ] = useState<T.Review[]>([]); // в который добавляем новый отзыв
   const [ openAnswer, setOpenAnswer ] = useState(""); // флаг открытия формы ответа
   const [ status, setStatus ] = useState<T.FetchingStatus>("idle"); // статус загрузки отзывов
@@ -38,6 +38,8 @@ const MovieReviews: React.FC = () => {
   const refParent = useRef<HTMLDivElement | null>(null);
   const refUl = useRef<HTMLUListElement | null>(null);
 
+  console.log("stateReviews", stateReviews)
+
   const handleScroll = async() => {
     if(refUl.current !== null) {
       if (window.innerHeight + (refParent.current?.scrollTop as number) < refUl.current?.offsetHeight || isLoading) {
@@ -48,6 +50,14 @@ const MovieReviews: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => { // for style body on modal
+    if (stateReviews) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [stateReviews]);
 
   useEffect(() => { // for scroll
     refParent.current?.addEventListener("scroll", handleScroll);
@@ -181,15 +191,8 @@ const MovieReviews: React.FC = () => {
     <>
     {isMobile // на mobile
       ? ( stateReviews // если комментарии открыты
-          ? ( <Modal ref={refParent} state={stateReviews}>
-                <><Wrapper>
-                    <Wrapper>
-                      <h2>Reviews</h2>
-                      <span>{totalDocuments}</span>
-                    </Wrapper>
-                    <ButtonCross onClick={() => setStateReviews(!stateReviews)} />
-                  </Wrapper>
-                  {openAnswer === "" &&
+          ? ( <Modal ref={refParent} state={stateReviews} title="Reviews" onHandler={() => setStateReviews(false)}>
+                  <>{openAnswer === "" &&
                     (auth.currentUser !== null
                       ? <FormReview title="New Review" newRew={true} />
                       : <div><LinkStyle to={"/login"}>On login</LinkStyle> to write review</div>)
@@ -198,10 +201,10 @@ const MovieReviews: React.FC = () => {
               </Modal>)
           : (openAnswer === ""
               && (auth.currentUser !== null
-                ? <WrapperMiniReviews onHandler={() => setStateReviews(!stateReviews)} totalDocuments={totalDocuments} >
+                ? <WrapperMiniReviews onHandler={() => setStateReviews(true)} totalDocuments={totalDocuments} >
                     <FormReview title="New Review" newRew={true} />
                   </WrapperMiniReviews>
-                : <WrapperMiniReviews onHandler={() => setStateReviews(!stateReviews)} totalDocuments={totalDocuments} >
+                : <WrapperMiniReviews onHandler={() => setStateReviews(true)} totalDocuments={totalDocuments} >
                     <div><LinkStyle to={"/login"}>On login</LinkStyle> to write review</div>
                   </WrapperMiniReviews>)
             )
