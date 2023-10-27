@@ -15,8 +15,8 @@ import Modal from "../../blocks/modal";
 import List from "../../ui/list";
 import Wrapper from "../../ui/wrapper";
 import OneReview from "../../blocks/one_review";
-import SpanArrow from "../../ui/span_arrow";
 import Section from "../../ui/section";
+import WrapperMiniReviews from "../../blocks/wrapper_mini_reviews";
 // @todo разобраться в перерисовках,
 
 const MovieReviews: React.FC = () => {
@@ -192,20 +192,18 @@ const MovieReviews: React.FC = () => {
                   {openAnswer === "" &&
                     (auth.currentUser !== null
                       ? <FormReview title="New Review" newRew={true} />
-                      : <LinkStyle to={"/login"}>On login</LinkStyle>)
+                      : <div><LinkStyle to={"/login"}>On login</LinkStyle> to write review</div>)
                   }
                   {content}</>
               </Modal>)
           : (openAnswer === ""
               && (auth.currentUser !== null
-                ? <div onClick={() => setStateReviews(!stateReviews)}>
-                    <Wrapper data-vertical="start">
-                      <h2>Reviews</h2>
-                      <SpanArrow>{totalDocuments}</SpanArrow>
-                    </Wrapper>
+                ? <WrapperMiniReviews onHandler={() => setStateReviews(!stateReviews)} totalDocuments={totalDocuments} >
                     <FormReview title="New Review" newRew={true} />
-                  </div>
-                : <LinkStyle to={"/login"}>On login</LinkStyle>)
+                  </WrapperMiniReviews>
+                : <WrapperMiniReviews onHandler={() => setStateReviews(!stateReviews)} totalDocuments={totalDocuments} >
+                    <div><LinkStyle to={"/login"}>On login</LinkStyle> to write review</div>
+                  </WrapperMiniReviews>)
             )
         )
       : (<Section ref={refParent}>
@@ -216,7 +214,7 @@ const MovieReviews: React.FC = () => {
           {openAnswer === "" &&
             (auth.currentUser !== null
               ? <FormReview title="New Review" newRew={true} />
-              : <LinkStyle to={"/login"}>On login</LinkStyle>)
+              : <div><LinkStyle to={"/login"}>On login</LinkStyle> to write review</div>)
           }
           {content}
         </Section>)

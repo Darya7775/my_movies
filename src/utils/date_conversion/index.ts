@@ -31,7 +31,7 @@ const getDate = (date: string) => {
     11: "December"
   };
 
-  return(`${d.getDate()} ${months[String(d.getMonth())]} ${d.getFullYear()} in ${d.getHours() < 10 ? `0${d.getHours()}`: d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}`: d.getMinutes()}`);
+  return(`${d.getDate()} ${months[String(d.getMonth())]} ${d.getFullYear()} at ${d.getHours() < 10 ? `0${d.getHours()}`: d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}`: d.getMinutes()}`);
 };
 
 export default getDate;

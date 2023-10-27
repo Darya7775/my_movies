@@ -39,7 +39,7 @@ const CardMovie: React.FC<Props> = (props: Props) => {
     <>
       {movie
         ? (<S.WrapperMovieStyle>
-            {auth.currentUser === null &&  <Tooltip markOpen={prompt}/>}
+            {auth.currentUser === null && <Tooltip markOpen={prompt}/>}
             <S.LinkImg to={`/movie/${props.movieId}`}>
               <S.ImgPoster src={movie.poster_path !== null ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}` : noPoster} alt="Poster" width={300} height={450} />
             </S.LinkImg>

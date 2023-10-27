@@ -10,5 +10,5 @@ package-lock.json
 *.sublime*
 node_modules/
 npm-debug.*
-src/slices_redux/headers_fetch.ts
 src/firebase
+src/slices_redux/headers_fetch.ts
