@@ -22,7 +22,7 @@ const FavoritesMovies: React.FC = () => {
     onDeleteAllMovies: useCallback(() => {
       dispatch(deleteAllMovies());
       deleteLocalStorageAllMovie();
-    },[])
+    }, [])
   };
 
   return(
@@ -40,6 +40,6 @@ const FavoritesMovies: React.FC = () => {
       </Container>
     </main>
   );
-}
+};
 
 export default memo(FavoritesMovies);

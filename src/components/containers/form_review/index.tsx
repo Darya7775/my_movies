@@ -45,7 +45,7 @@ const FormReview: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     reset();
-  }, [isSubmitSuccessful, reset])
+  }, [ isSubmitSuccessful, reset ]);
 
   const watchReview = useWatch({ control: control, name: "review" });
   useAutosizeTextArea(textAreaRef.current, watchReview);
@@ -77,7 +77,7 @@ const FormReview: React.FC<Props> = (props: Props) => {
         // add in parent array children
         const parentRef = doc(db, idmovie, props.idParent as string);
         await updateDoc(parentRef, {
-          children: [...props.parentChildren as string[], id]
+          children: [ ...props.parentChildren as string[], id ]
         });
 
         // add in parent subcollection
@@ -96,7 +96,7 @@ const FormReview: React.FC<Props> = (props: Props) => {
         setError(String(e));
       }
     }
-  }
+  };
 
   return(
     <Form onSubmit={handleSubmit((comment: FormValues) => props.newRew ? callbacks.onAddReview(comment) : callbacks.onAddAnswer(props.idParent as string, comment))}>

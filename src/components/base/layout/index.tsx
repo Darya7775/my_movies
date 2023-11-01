@@ -11,6 +11,6 @@ const Layout: React.FC = () => {
       <Outlet />
     </>
   );
-}
+};
 
 export default memo(Layout);

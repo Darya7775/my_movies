@@ -8,14 +8,15 @@ interface Props {
   text?: string,
   type?: string,
   id?: string
-};
+}
 
 const Input: React.FC<Props> = (props: Props) => {
+  const DELAY = 600;
   // Внутренний стейт для быстрого отображения ввода
   const [ value, setValue ] = useState(props.value);
 
   const onChangeDebounce = useCallback(
-    debounce(value => props.onChange(value), 600),
+    debounce(v => props.onChange(v), DELAY),
     [props.onChange]
   );
 
@@ -31,13 +32,13 @@ const Input: React.FC<Props> = (props: Props) => {
   return(
     <InputWrapper>
       <input  type={props.type ? props.type : "text"}
-              value={value}
-              onChange={onChange}
-              id={props.id ? props.id : props.text}
-              name={props.text} />
+        value={value}
+        onChange={onChange}
+        id={props.id ? props.id : props.text}
+        name={props.text} />
       <label  htmlFor={props.id ? props.id : props.text}>{props.text}</label>
     </InputWrapper>
   );
-}
+};
 
 export default Input;

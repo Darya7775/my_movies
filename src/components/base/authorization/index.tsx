@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from "react";
 import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
-import { onAuthStateChanged, User, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../../firebase/firebase";
 import { getDataUser } from "../../../slices_redux/user_slice";
 
@@ -13,7 +13,7 @@ import * as S from "./styles";
 const Authorization: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const [ error, setError ] = useState("");
+  const [ errorSingOut, setErrorSingOut ] = useState("");
 
   useEffect(() => {
     // подписка на обновление user
@@ -29,8 +29,9 @@ const Authorization: React.FC = () => {
     onSingOut: useCallback(async () => {
       try {
         await signOut(auth);
-      } catch (error: any) {
-        setError(error.message.split(":")[1]);
+      } catch (error: unknown) {
+        const knownError = error as {message: string};
+        setErrorSingOut(knownError.message.split(":")[1]);
       }
     }, [])
   };
@@ -39,17 +40,17 @@ const Authorization: React.FC = () => {
 
   return(
     <S.Wrapper>
-      {error && <Error>{error}</Error>}
+      {errorSingOut && <Error>{errorSingOut}</Error>}
 
       {auth.currentUser !== null
         ? <MenuProfile lettera={lettera} signOut={callbacks.onSingOut} />
         : <>
-            <LinkStyle to="/login">Login</LinkStyle>
-            <LinkStyle to="/register">Register now</LinkStyle>
-          </>
+          <LinkStyle to="/login">Login</LinkStyle>
+          <LinkStyle to="/register">Register now</LinkStyle>
+        </>
       }
     </S.Wrapper>
   );
-}
+};
 
 export default memo(Authorization);

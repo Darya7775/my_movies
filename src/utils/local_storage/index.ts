@@ -3,7 +3,7 @@ import createMovieFrom from "../create_from";
 
 interface LocalStorage {
   [key: string]: object
-};
+}
 
 export const addLocalStorageMovie = (idMovie: number, movie: T.OneMovieMain | T.FavInMovOne) => {
   if(!localStorage.getItem("favoritesMovies")) {

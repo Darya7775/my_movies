@@ -38,13 +38,14 @@ const Register: React.FC = () => {
       try {
         await createUserWithEmailAndPassword(auth, user.register_email, user.register_password);
         navigate("/data_user");
-      } catch (error: any) {
-        setError(error.message.split(":")[1]);
+      } catch (e: unknown) {
+        const knownError = e as {message: string};
+        setError(knownError.message.split(":")[1]);
       }
     }, []),
     // ошибка при отправлении
     onError: useCallback((errors: FieldErrors<FormValues>) => {
-      console.log(errors)
+      console.log(errors);
     }, []),
     // открытие/закрытие пароля
     onPassword: () => setShow(!show),
@@ -53,10 +54,10 @@ const Register: React.FC = () => {
   };
 
   const listPrompts = <ul>From 8 to 20 characters. <br/> The password must contain:
-                        <li><b>!?@#$%*_=()</b> minimum one special character</li>
-                        <li><b>A-Z</b>: minimum one letter in uppercase</li>
-                        <li><b>a-z</b>: minimum one lowercase letter</li>
-                      </ul>;
+    <li><b>!?@#$%*_=()</b> minimum one special character</li>
+    <li><b>A-Z</b>: minimum one letter in uppercase</li>
+    <li><b>a-z</b>: minimum one lowercase letter</li>
+  </ul>;
 
   return(
     <main>
@@ -73,8 +74,8 @@ const Register: React.FC = () => {
                 pattern: {
                   value: /\w+@\w+\.\w+/,
                   message: "example@gmail.com"
-              }
-            })} />
+                }
+              })} />
           </WrapperInput>
 
           <WrapperInput>
@@ -86,16 +87,16 @@ const Register: React.FC = () => {
                 pattern: {
                   value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}/,
                   message: "From 8 to 20 characters, The password must contain: - !?@#$%*_=() minimum one special character, - A-Z: minimum one letter in uppercase, - a-z: minimum one lowercase letter"
-              }
-            })} />
+                }
+              })} />
             <EyeImg src={show ? eye : eyeClose} width={30} height={25} alt={show ? "hide password" : "show password"} onClick={callbacks.onPassword}/>
             {isMobile
               ? (listPrompts)
               : (openPrompt
-                  ? (<><button type="button" aria-label="password hint" onClick={callbacks.onPrompt}></button>
-                      {listPrompts}</>)
-                  : (<button type="button" aria-label="password hint" onClick={callbacks.onPrompt}></button>)
-                )
+                ? (<><button type="button" aria-label="password hint" onClick={callbacks.onPrompt}></button>
+                  {listPrompts}</>)
+                : (<button type="button" aria-label="password hint" onClick={callbacks.onPrompt}></button>)
+              )
             }
           </WrapperInput>
 

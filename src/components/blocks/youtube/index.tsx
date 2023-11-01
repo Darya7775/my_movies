@@ -1,5 +1,5 @@
 import React from "react";
-import YouTube, { YouTubeProps } from "react-youtube";
+import { YouTubeProps } from "react-youtube";
 import { StyleYoutube } from "./styles";
 
 interface Props {
@@ -7,10 +7,6 @@ interface Props {
 }
 
 const MyYouTube: React.FC<Props> = (props: Props) => {
-  const onPlayerReady: YouTubeProps["onReady"] = (event) => {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
 
   const opts: YouTubeProps["opts"] = {
     playerVars: {
@@ -21,6 +17,6 @@ const MyYouTube: React.FC<Props> = (props: Props) => {
   };
 
   return <StyleYoutube videoId={props.videoId} opts={opts} />;
-}
+};
 
 export default MyYouTube;

@@ -24,6 +24,6 @@ const List: React.FC<Props>= (props: Props) => {
       </S.MoviesContainer>
     </S.MoviesSectionStyle>
   );
-}
+};
 
 export default memo(List);

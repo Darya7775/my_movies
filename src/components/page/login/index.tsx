@@ -23,7 +23,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [error, setError] = useState('');
+  const [ error, setError ] = useState("");
   const [ show, setShow ] = useState(false);
 
   const { register, handleSubmit, formState } = useForm<FormValues>();
@@ -34,12 +34,13 @@ const Login: React.FC = () => {
     onSubmit: useCallback(async (user: FormValues) => {
       try {
         await signInWithEmailAndPassword(auth, user.login, user.password);
-        const back =  location.state?.back && location.state?.back !== location.pathname
-                      ? location.state?.back
-                      : '/';
+        const back = (location.state?.back && location.state?.back !== location.pathname)
+          ? location.state?.back
+          : "/";
         navigate(back);
-      } catch (error: any) {
-        setError(error.message.split(":")[1]);
+      } catch (e: unknown) {
+        const knownError = e as {message: string};
+        setError(knownError.message.split(":")[1]);
       }
     }, []),
     // открытие/закрытие пароля
@@ -61,8 +62,8 @@ const Login: React.FC = () => {
                 pattern: {
                   value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                   message: "example@gmail.com"
-              }
-            })} />
+                }
+              })} />
           </WrapperInput>
 
           <WrapperInput>
@@ -73,8 +74,8 @@ const Login: React.FC = () => {
                 pattern: {
                   value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}/,
                   message: "From 8 to 20 characters, The password must contain: - !?@#$%*_=() minimum one special character, - A-Z: minimum one letter in uppercase, - a-z: minimum one lowercase letter"
-              }
-            })} />
+                }
+              })} />
             <EyeImg src={show ? eye : eyeClose} width={30} height={25} alt={show ? "hide password" : "show password"} onClick={callbacks.onPassword}/>
           </WrapperInput>
 

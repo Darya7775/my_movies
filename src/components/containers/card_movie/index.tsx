@@ -18,7 +18,7 @@ interface Props {
 
 const CardMovie: React.FC<Props> = (props: Props) => {
   const dispatch = useAppDispatch();
-  const movie = useAppSelector(state => props.select(state, props.movieId)) as T.OneMovieMain;
+  const movieState = useAppSelector(state => props.select(state, props.movieId)) as T.OneMovieMain;
   const [ prompt, setPrompt ] = useState(false);
 
   const callbacks = {
@@ -27,34 +27,34 @@ const CardMovie: React.FC<Props> = (props: Props) => {
       dispatch(addMovie(movie));
       addLocalStorageMovie(movie.id, movie);
       setPrompt(true);
-    }, [movie.id]),
+    }, [movieState.id]),
     // удалить фильм из избранного
     onDelete: useCallback((id: number) => {
       dispatch(deleteMovie(id));
       deleteLocalStorageMovie(id);
-    }, [movie.id])
-  }
+    }, [movieState.id])
+  };
 
   return(
     <>
-      {movie
-        ? (<S.WrapperMovieStyle>
-            {auth.currentUser === null && <Tooltip markOpen={prompt}/>}
-            <S.LinkImg to={`/movie/${props.movieId}`}>
-              <S.ImgPoster src={movie.poster_path !== null ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}` : noPoster} alt="Poster" width={300} height={450} />
-            </S.LinkImg>
-            <S.LinkTitle to={`/movie/${props.movieId}`}>
-              <h2>{movie.title}</h2>
-            </S.LinkTitle>
-            <Heart
-              isFav={movie.isFav}
-              onAdd={() => callbacks.onAddMovie(movie)}
-              onDelete={() => callbacks.onDelete(movie.id)}>
-            </Heart>
-            <S.Year>{movie.release_date?.split("-")[0]}</S.Year>
-            <S.ListGenres>{movie.genre_ids?.join(", ")}</S.ListGenres>
-            {movie.vote_average !== 0 && <S.MovieRating>{movie.vote_average.toFixed(1)}</S.MovieRating>}
-          </S.WrapperMovieStyle>)
+      {movieState
+        ?(<S.WrapperMovieStyle>
+          {auth.currentUser === null && <Tooltip markOpen={prompt}/>}
+          <S.LinkImg to={`/movie/${props.movieId}`}>
+            <S.ImgPoster src={movieState.poster_path !== null ? `https://image.tmdb.org/t/p/w300/${movieState.poster_path}` : noPoster} alt="Poster" width={300} height={450} />
+          </S.LinkImg>
+          <S.LinkTitle to={`/movie/${props.movieId}`}>
+            <h2>{movieState.title}</h2>
+          </S.LinkTitle>
+          <Heart
+            isFav={movieState.isFav}
+            onAdd={() => callbacks.onAddMovie(movieState)}
+            onDelete={() => callbacks.onDelete(movieState.id)}>
+          </Heart>
+          <S.Year>{movieState.release_date?.split("-")[0]}</S.Year>
+          <S.ListGenres>{movieState.genre_ids?.join(", ")}</S.ListGenres>
+          {movieState.vote_average !== 0 && <S.MovieRating>{movieState.vote_average.toFixed(1)}</S.MovieRating>}
+        </S.WrapperMovieStyle>)
         : (<div>No movie</div>)
       }
     </>

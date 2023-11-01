@@ -1,5 +1,5 @@
- // title = title, u = url
- export const categories = [
+// title = title, u = url
+export const categories = [
   {title: "Now Playing", u: "now_playing"},
   {title: "Popular", u: "popular"},
   {title: "Top Rated", u: "top_rated"},
@@ -42,7 +42,7 @@ export const years = [
   {value: "1969", title: "1969"}, {value: "1968", title: "1968"}, {value: "1967", title: "1967"}
 ];
 
-export const adult = [
+export const adultSalect = [
   {value: "false", title: "adult"},
   {value: "true", title: "child"}
 ];

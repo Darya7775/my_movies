@@ -16,13 +16,13 @@ const Main: React.FC = () => {
     } else {
       await dispatch(fetchMovie(true));
     }
-  }, [], true)
+  }, [], true);
 
   return (
     <main>
       <ListMovies />
     </main>
   );
-}
+};
 
 export default memo(Main);

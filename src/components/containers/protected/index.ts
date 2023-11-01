@@ -22,9 +22,8 @@ const Protected: React.FC<Props> = (props: Props) => {
 
   if(!name) {
     return null;
-  } else {
-    return props.children;
   }
-}
+  return props.children;
+};
 
 export default memo(Protected);

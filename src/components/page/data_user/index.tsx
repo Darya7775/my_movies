@@ -19,9 +19,10 @@ type FormValues = {
 }
 
 const DataUser: React.FC = () => {
+  const DELAY = 1500;
   const navigate = useNavigate();
 
-  const [ error, setError ] = useState("");
+  const [ errorFetch, setErrorFetch ] = useState("");
   const [ success, setSuccess ] = useState("");
   const [ errorDelete, setErrorDelete ] = useState("");
   const [ successDelete, setSuccessDelete ] = useState("");
@@ -40,8 +41,9 @@ const DataUser: React.FC = () => {
       try {
         await updateProfile(auth.currentUser as User, { displayName: user.name, photoURL: user.url });
         setSuccess("Data updated successfully");
-      } catch (error: any) {
-        setError(error.message.split(":")[1]);
+      } catch (error: unknown) {
+        const knownError = error as {message: string};
+        setErrorFetch(knownError.message.split(":")[1]);
       }
 
       if(auth.currentUser === null) {
@@ -53,10 +55,11 @@ const DataUser: React.FC = () => {
       try {
         await deleteUser(auth.currentUser as User);
         setSuccessDelete("Account delete successfully");
-        const deb = debounce(() => navigate("/register"), 1500);
+        const deb = debounce(() => navigate("/register"), DELAY);
         deb();
-      } catch (error: any) {
-        setErrorDelete(error.message.split(":")[1]);
+      } catch (error: unknown) {
+        const knownError = error as {message: string};
+        setErrorDelete(knownError.message.split(":")[1]);
         navigate("/login");
       }
     }, [auth.currentUser])
@@ -67,7 +70,7 @@ const DataUser: React.FC = () => {
       <Container>
         <Form method="POST" onSubmit={handleSubmit(callbacks.onSubmit)}>
           {success &&  delay(<Success>{success}</Success>, setSuccess)}
-          {error && <Error>{error}</Error>}
+          {errorFetch && <Error>{errorFetch}</Error>}
           {successDelete && delay(<Success>{successDelete}</Success>, setSuccessDelete)}
           {errorDelete && <Error>{errorDelete}</Error>}
 
@@ -82,7 +85,7 @@ const DataUser: React.FC = () => {
                   message: "Only letters and hyphen",
                   value: /^[A-Z]([a-z]| |-|[A-Z]){1,50}$/
                 }
-            })} />
+              })} />
           </WrapperInput>
 
           <WrapperInput>
@@ -93,8 +96,8 @@ const DataUser: React.FC = () => {
                 pattern: {
                   value: /^https:\/\/.+$/,
                   message: "https://example.com/jane-q-user/profile.jpg"
-              }
-            })} />
+                }
+              })} />
           </WrapperInput>
 
           <Button type="submit" disabled={!isValid || isSubmitting}>Send</Button>

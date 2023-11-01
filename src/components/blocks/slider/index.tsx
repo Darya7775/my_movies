@@ -1,21 +1,23 @@
-import React, { useRef, useEffect } from 'react';
-import Swiper from 'swiper';
-import { register } from 'swiper/element/bundle';
-import type { SwiperSlideProps, SwiperProps } from 'swiper/react';
+import React, { useRef, useEffect } from "react";
+import Swiper from "swiper";
+import { register } from "swiper/element/bundle";
+import type { SwiperSlideProps, SwiperProps } from "swiper/react";
 
 import * as S from "./styles";
 
 interface Props {
-  items: object[],
+  items: {
+    [key: string]: string | number
+  }[],
   template: (item: {
-    [key: string]: any
+    [key: string]: string | number
   }) => JSX.Element
 }
 
 type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
 
 declare global {
-  namespace JSX {
+  namespace React.JSX {
     interface IntrinsicElements {
       "swiper-container": React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & SwiperProps,
@@ -30,6 +32,7 @@ declare global {
 }
 
 const Slider: React.FC<Props> = (props: Props) => {
+  const LEAST_NUMBER_OF_SLIDES = 3;
   const swiperElRef = useRef<SwiperRef>(null);
 
   useEffect(() => {
@@ -91,23 +94,22 @@ const Slider: React.FC<Props> = (props: Props) => {
     //   });
   }, []);
 
-
   return (
     <S.WrapperSlider>
       <swiper-container
         ref={swiperElRef}
         init={false}
-        >
+      >
         {props.items.map((item, i) => (<swiper-slide key={i}>{props.template(item)}</swiper-slide>))}
       </swiper-container>
-      {props.items.length > 3 && // если слайдов меньше 3, не показывать стрелки
-        <>
-          <S.Next className="next" />
-          <S.Prev className="prev" />
-        </>
+      {props.items.length > LEAST_NUMBER_OF_SLIDES // если слайдов меньше 3, не показывать стрелки
+      && <>
+        <S.Next className="next" />
+        <S.Prev className="prev" />
+      </>
       }
     </S.WrapperSlider>
   );
-}
+};
 
 export default Slider;

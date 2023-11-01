@@ -23,21 +23,21 @@ const Select: React.FC<Props> = (props: Props) => {
         {props.options.map((option, i) => (
           open
             ? (<S.SelectItem key={i}>
-                  <label htmlFor={option.title}>{option.title}</label>
-                  <input  type="radio" name={props.name} value={option.value}
-                          id={option.title} onChange={onSelect} onClick={() => setOpen(!open)}
-                          checked={props.value === option.value ? true : false} />
-                </S.SelectItem>
-              )
+              <label htmlFor={option.title}>{option.title}</label>
+              <input  type="radio" name={props.name} value={option.value}
+                id={option.title} onChange={onSelect} onClick={() => setOpen(!open)}
+                checked={props.value === option.value} />
+            </S.SelectItem>
+            )
             : (props.value === option.value
-                ? ( <S.SelectItem key={i}>
-                      <label htmlFor={option.title}>{option.title}</label>
-                      <input  type="radio" name={props.name} value={option.value}
-                              id={option.title} checked readOnly onClick={() => setOpen(!open)} />
-                    </S.SelectItem>
-                  )
-                : null
+              ? ( <S.SelectItem key={i}>
+                <label htmlFor={option.title}>{option.title}</label>
+                <input  type="radio" name={props.name} value={option.value}
+                  id={option.title} checked readOnly onClick={() => setOpen(!open)} />
+              </S.SelectItem>
               )
+              : null
+            )
         ))}
       </S.SelectStyle>
     </S.WrapperSelect>

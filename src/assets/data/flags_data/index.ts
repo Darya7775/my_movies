@@ -76,7 +76,7 @@ import qatar from "../../flags/qatar.svg";
 import south_korea from "../../flags/south_korea.svg";
 
 type list = {
-  [key: string]: any
+  [key: string]: string
 }
 
 const contryes: list = {

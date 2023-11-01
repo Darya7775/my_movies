@@ -6,12 +6,11 @@ const initialStateLocal = () => {
     const favMov: {[key: string]: T.OneMovieMain} = JSON.parse(localStorage.getItem("favoritesMovies") as string);
     return({
       arrayMovies: Object.values(favMov)
-    })
-  } else {
-    return({
-      arrayMovies: []
     });
   }
+  return({
+    arrayMovies: []
+  });
 };
 
 const initialState: T.StateFavoritesMovies = initialStateLocal();
@@ -33,7 +32,7 @@ const favMovSlice = createSlice({
       state.arrayMovies = [];
     }
   }
-})
+});
 
 export const { addMovie, deleteMovie, deleteAllMovies } = favMovSlice.actions;
 

@@ -17,7 +17,7 @@ type FormValues = {
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
 
-  const [error, setError] = useState('');
+  const [ error, setError ] = useState("");
 
   const { register, formState, handleSubmit } = useForm<FormValues>();
   const { isValid } = formState;
@@ -28,8 +28,9 @@ const ResetPassword: React.FC = () => {
       try {
         await sendPasswordResetEmail(auth, email.reset_password_email, {url: "https://mymovies-1f13f.firebaseapp.com/"});
         navigate("check_email");
-      } catch (error: any) {
-        setError(error.message.split(":")[1]);
+      } catch (e: unknown) {
+        const knownError = e as {message: string};
+        setError(knownError.message.split(":")[1]);
       }
     }, []),
   };
@@ -38,7 +39,7 @@ const ResetPassword: React.FC = () => {
     <main>
       <Container>
         {error && <Error>{error}</Error>}
-        <p>What's your email address?</p>
+        <p>What&apos;s your email address?</p>
         <p>Enter the email you used to register</p>
 
         <Form method="POST" onSubmit={handleSubmit(callbacks.onSubmit)}>
@@ -51,8 +52,8 @@ const ResetPassword: React.FC = () => {
                 pattern: {
                   value: /\w+@\w+\.\w+/,
                   message: "example@gmail.com"
-              }
-            })} />
+                }
+              })} />
           </WrapperInput>
 
           <Button type="submit" disabled={!isValid}>Send password reset email</Button>

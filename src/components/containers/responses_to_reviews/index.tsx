@@ -20,11 +20,12 @@ interface Props {
 }
 
 const ResponsesToReviews: React.FC<Props> = (props: Props) => {
+  const NUMBERS_OF_DOCUMENTS = 10;
   const { idmovie } = useParams() as { idmovie: string };
 
   const [ reviews, setReviews ] = useState<T.Children[]>([]); // все ответы на 1 отзыв
   const [ status, setStatus ] = useState<T.FetchingStatus>("idle"); // статус загрузки отзывов
-  const [ error, setError ] = useState("");
+  const [ errorFetch, setErrorFetch ] = useState("");
   const [ downloadedDoc, setDownloadedDoc ] = useState(0); // всего загруженных документов
   const [ totalDocuments, setTotalDocuments ] = useState(0); // всего документов в базе
   const [ idLastDoc, setIdLastDoc ] = useState(""); // id последнего дока для запроса след партии
@@ -32,79 +33,79 @@ const ResponsesToReviews: React.FC<Props> = (props: Props) => {
   useEffect(() => { // для 1 ответа
     const q = query(collection(db, idmovie, props.idParent, "children"), orderBy("id"), limitToLast(1));
     const unsubscribe = onSnapshot(q,
-    (snapshot) => {
-      let add: T.Children[] = [];
+      (snapshot) => {
+        const add: T.Children[] = [];
 
-      snapshot.forEach(rev => {
-        let copyRev = rev.data();
-        copyRev.time = copyRev.time.toDate();
-        add.push(copyRev as T.Children)
-      });
-      setDownloadedDoc(load => load + 1);
-      setReviews(reviews => [...reviews, ...add]);
-    },
-    (error) => {
-      setError(error.message);
-    },);
+        snapshot.forEach(rev => {
+          const copyRev = rev.data();
+          copyRev.time = copyRev.time.toDate();
+          add.push(copyRev as T.Children);
+        });
+        setDownloadedDoc(load => load + 1);
+        setReviews(reviewsPrev => [ ...reviewsPrev, ...add ]);
+      },
+      (error) => {
+        setErrorFetch(error.message);
+      },);
 
     return () => {
       unsubscribe();
-  	}
-  }, [])
+    };
+  }, []);
 
   useEffect(() => { // для первых 10 ответов
     setStatus("loading");
 
-    const q = query(collection(db, idmovie, props.idParent, "children"), orderBy("id"), limit(10));
+    const q = query(collection(db, idmovie, props.idParent, "children"), orderBy("id"), limit(NUMBERS_OF_DOCUMENTS));
     const unsubscribe = onSnapshot(q,
-    (snapshot) => {
-      let add: T.Children[] = [];
+      (snapshot) => {
+        const add: T.Children[] = [];
 
-      snapshot.forEach(rev => {
-        let copyRev = rev.data();
-        copyRev.time = copyRev.time.toDate();
-        add.push(copyRev as T.Children);
-      });
+        snapshot.forEach(rev => {
+          const copyRev = rev.data();
+          copyRev.time = copyRev.time.toDate();
+          add.push(copyRev as T.Children);
+        });
 
-      setDownloadedDoc(snapshot.size);
-      setReviews([...reviews, ...add]);
-      if(snapshot.size !== 0) {
-        setIdLastDoc(add[snapshot.size - 1].id);
-      }
-      setStatus("succeeded");
-    },
-    (error) => {
-      setError(error.message);
-      setStatus("failed");
-    },);
+        setDownloadedDoc(snapshot.size);
+        setReviews([ ...reviews, ...add ]);
+        if(snapshot.size !== 0) {
+          setIdLastDoc(add[snapshot.size - 1].id);
+        }
+        setStatus("succeeded");
+      },
+      (error) => {
+        setErrorFetch(error.message);
+        setStatus("failed");
+      },);
 
     return () => {
       unsubscribe();
-  	}
-  }, [])
+    };
+  }, []);
 
   const callbacks = {
     onLoadMore: async() => {
       try {
         setStatus("loading");
-        const q = query(collection(db, idmovie, props.idParent, "children"), orderBy("id"), startAfter(idLastDoc), limit(10));
+        const q = query(collection(db, idmovie, props.idParent, "children"), orderBy("id"), startAfter(idLastDoc), limit(NUMBERS_OF_DOCUMENTS));
         const querySnapshot = await getDocs(q);
 
-        let add: T.Children[] = [];
+        const add: T.Children[] = [];
 
         querySnapshot.forEach(rev => {
-          let copyRev = rev.data();
+          const copyRev = rev.data();
           copyRev.time = copyRev.time.toDate();
           add.push(copyRev as T.Children);
         });
 
-        setReviews(reviews => [...reviews, ...add]);
+        setReviews(reviewsPrev => [ ...reviewsPrev, ...add ]);
         setIdLastDoc(add[querySnapshot.size - 1].id);
         setDownloadedDoc(downloadedDoc + querySnapshot.size);
         setStatus("succeeded");
       } catch (error) {
         setStatus("failed");
-        setError(String(error));
+        setErrorFetch(String(error));
       }
     },
     // запрос на общее кол-во док-тов
@@ -113,19 +114,19 @@ const ResponsesToReviews: React.FC<Props> = (props: Props) => {
       const countDocs = await getCountFromServer(coll);
       setTotalDocuments(countDocs.data().count);
     }, [])
-  }
+  };
 
   let content;
   if(status === "loading") {
     callbacks.onTotalDocs();
-    content = <Spinner text="Loading..." />
+    content = <Spinner text="Loading..." />;
   } else if(status === "succeeded") {
     content = totalDocuments <= downloadedDoc ? null : <Button type="button" onClick={callbacks.onLoadMore}>Load more</Button>;
   } else if(status === "failed") {
-    content = <div>{error}</div>
+    content = <div>{errorFetch}</div>;
   }
 
-  let keysAdd: {[key: string]: string} = {}; // для того, чтоб не рендерить элементы с одинаковыми ключами
+  const keysAdd: {[key: string]: string} = {}; // для того, чтоб не рендерить элементы с одинаковыми ключами
 
   return(
     <>
@@ -138,12 +139,12 @@ const ResponsesToReviews: React.FC<Props> = (props: Props) => {
               <OneReview review={reviewCh} key={reviewCh.id}>
                 {props.openAnswer === reviewCh.id
                   ? (auth.currentUser !== null
-                    ? <FormReview title="Answer" newRew={false} reset={true} openAnswer={props.onCancelOpenAnswer}
-                                  idParent={reviewCh.idParent} parentChildren={props.parentChildren} />
-                    : <>
-                        <LinkStyle to={"/login"}>On login</LinkStyle>
-                        <Button type="reset" onClick={props.onCancelOpenAnswer}>Reset</Button>
-                      </>)
+                    ?<FormReview title="Answer" newRew={false} reset={true} openAnswer={props.onCancelOpenAnswer}
+                      idParent={reviewCh.idParent} parentChildren={props.parentChildren} />
+                    :<>
+                      <LinkStyle to={"/login"}>On login</LinkStyle>
+                      <Button type="reset" onClick={props.onCancelOpenAnswer}>Reset</Button>
+                    </>)
                   : <Button type="button" onClick={() => props.onOpenAnswer(reviewCh.id)}>Answer</Button>}
               </OneReview>);
           }

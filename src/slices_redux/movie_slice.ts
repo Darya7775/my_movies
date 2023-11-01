@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, createEntityAdapter } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createEntityAdapter, PayloadAction } from "@reduxjs/toolkit";
 import * as T from "../types";
-import type { PayloadAction } from '@reduxjs/toolkit';
+// import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { conversionMovie } from "../utils/movie_conversion";
 import options from "./headers_fetch";
@@ -40,25 +40,26 @@ export const fetchMovie = createAppAsyncThunk("movie/categories", async (replace
   // Получение текущей категории
   const choosedCategory = getState().movies.choosedCategory;
   // Cбор search params
-  let urlSearch = `language=${param.language}&page=${param.page}`;
+  const urlSearch = `language=${param.language}&page=${param.page}`;
   // Сохранить параметры в адрес страницы
-  const url = choosedCategory + (urlSearch ? `?${urlSearch}`: '') + window.location.hash;
+  const url = choosedCategory + (urlSearch ? `?${urlSearch}`: "") + window.location.hash;
   if(replaceHistory) {
-    window.history.replaceState({}, '', url);
+    window.history.replaceState({}, "", url);
   } else {
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, "", url);
   }
 
   try {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${choosedCategory}?${urlSearch}`, options);
     const data: T.AllMovies = await response.json();
     // получение жанров
-    const responseGenres = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options);
+    const responseGenres = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=en", options);
     const dataGenres: T.Genres = await responseGenres.json();
     data.results = conversionMovie(data.results, dataGenres);
     return data;
-  } catch (error: any) {
-    throw(error.message);
+  } catch (error: unknown) {
+    const knownError = error as {message: string};
+    throw(knownError.message);
   }
 });
 
@@ -70,25 +71,26 @@ export const fetchSearchMovie = createAppAsyncThunk("movie/search", async(replac
   // Получение параметров из store
   const param = getState().movies.params;
   // Cбор search params
-  let urlSearch = `query=${param.q}&include_adult=${param.include_adult}&language=${param.language}&primary_release_year=${param.primary_release_year}&page=${param.page}`;
+  const urlSearch = `query=${param.q}&include_adult=${param.include_adult}&language=${param.language}&primary_release_year=${param.primary_release_year}&page=${param.page}`;
   // Сохранить параметры в адрес страницы
-  const url = "/search" + (urlSearch ? `?${urlSearch}`: '') + window.location.hash;
+  const url = `/search${(urlSearch ? `?${urlSearch}`: "")}${window.location.hash}`;
   if(replaceHistory) {
-    window.history.replaceState({}, '', url);
+    window.history.replaceState({}, "", url);
   } else {
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, "", url);
   }
 
   try {
     const response = await fetch(`https://api.themoviedb.org/3/search/movie?${urlSearch}`, options);
     const data: T.AllMovies = await response.json();
     // получение жанров
-    const responseGenres = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options);
+    const responseGenres = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=en", options);
     const dataGenres: T.Genres = await responseGenres.json();
     data.results = conversionMovie(data.results, dataGenres);
     return data;
-  } catch (error: any) {
-    throw(error.message);
+  } catch (error: unknown) {
+    const knownError = error as {message: string};
+    throw(knownError.message);
   }
 });
 
@@ -119,21 +121,21 @@ const moviesSlice = createSlice({
     // Установка параметров
     setParams: (state, action: PayloadAction<{ param: string, value: string }>) => {
       switch (action.payload.param) {
-        case "q":
-          state.params.q = action.payload.value;
-          break;
-        case "language":
-          state.params.language = action.payload.value;
-          break;
-        case "primary_release_year":
-          state.params.primary_release_year = action.payload.value;
-          break;
-        case "include_adult":
-          state.params.include_adult = action.payload.value;
-          break;
+      case "q":
+        state.params.q = action.payload.value;
+        break;
+      case "language":
+        state.params.language = action.payload.value;
+        break;
+      case "primary_release_year":
+        state.params.primary_release_year = action.payload.value;
+        break;
+      case "include_adult":
+        state.params.include_adult = action.payload.value;
+        break;
 
-        default:
-          break;
+      default:
+        break;
       }
     },
   },
@@ -167,7 +169,7 @@ const moviesSlice = createSlice({
       .addCase(fetchSearchMovie.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
+      });
   }
 });
 

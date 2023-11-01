@@ -1,4 +1,5 @@
 const getDate = (date: string) => {
+  const TEN = 10;
   const d = new Date(Date.parse(date));
 
   // const months: {[key: string]: string} = {
@@ -31,7 +32,7 @@ const getDate = (date: string) => {
     11: "December"
   };
 
-  return(`${d.getDate()} ${months[String(d.getMonth())]} ${d.getFullYear()} at ${d.getHours() < 10 ? `0${d.getHours()}`: d.getHours()}:${d.getMinutes() < 10 ? `0${d.getMinutes()}`: d.getMinutes()}`);
+  return(`${d.getDate()} ${months[String(d.getMonth())]} ${d.getFullYear()} at ${d.getHours() < TEN ? `0${d.getHours()}`: d.getHours()}:${d.getMinutes() < TEN ? `0${d.getMinutes()}`: d.getMinutes()}`);
 };
 
 export default getDate;

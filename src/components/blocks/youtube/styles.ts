@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import YouTube from 'react-youtube';
+import YouTube from "react-youtube";
 import * as screen from "../../../styles/constants";
 
 export const StyleYoutube = styled(YouTube)`

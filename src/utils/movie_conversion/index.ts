@@ -8,31 +8,35 @@ import * as T from "../../types";
  */
 
 export const conversionMovie = (dataArray: T.OneMovieMain[], dataGenres: T.Genres) => {
+  let getArray = dataArray;
 
   // преобразование жанров в обЪект
-  const normalGenres = dataGenres.genres.reduce((accOb, genre) => (accOb[String(genre.id)] = genre.name, accOb), {} as T.NormalGenresTypes);
+  const normalGenres = dataGenres.genres.reduce((accOb, genre) => {
+    accOb[String(genre.id)] = genre.name;
+    return accOb;
+  }, {} as T.NormalGenresTypes);
 
   // замена массива жанров с числами на массив жанров с названиями
-  dataArray = dataArray.map(movie => {
+  getArray = dataArray.map(movie => {
     movie.genre_ids = movie.genre_ids.reduce((acc, curGenge) => (acc.push(normalGenres[curGenge]), acc), [] as string[]);
     return movie;
   });
 
   // добавление флага в/не избранном
   let favMov = {} as { [key: string]: object };
-    if(localStorage.getItem("favoritesMovies")) {
-      favMov = JSON.parse(localStorage.getItem("favoritesMovies") as string);
+  if(localStorage.getItem("favoritesMovies")) {
+    favMov = JSON.parse(localStorage.getItem("favoritesMovies") as string);
+  }
+  for(let i = 0; i < getArray.length; i++) {
+    const id = getArray[i].id;
+    if(favMov[id]){
+      getArray[i].isFav = true;
+    } else {
+      getArray[i].isFav = false;
     }
-    for(let i = 0; i < dataArray.length; i++) {
-      let id = dataArray[i].id;
-      if(favMov[id]){
-        dataArray[i].isFav = true;
-      } else {
-        dataArray[i].isFav = false;
-      }
-    }
+  }
 
-  return dataArray;
+  return getArray;
 };
 
 export const addMarketFavOneMov = (movie: T.OneMoviePage) => {
@@ -48,4 +52,4 @@ export const addMarketFavOneMov = (movie: T.OneMoviePage) => {
   }
 
   return movie;
-}
+};

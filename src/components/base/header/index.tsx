@@ -4,7 +4,7 @@ import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
 import { fetchSearchMovie, setParams, addCurrentPage } from "../../../slices_redux/movie_slice";
 import logo from "../../../assets/movies_logo.png";
-import { languages, years, adult } from "../../../assets/data/filters";
+import { languages, years, adultSalect } from "../../../assets/data/filters";
 import ListCategories from "../../containers/list_categories";
 import Search from "../../blocks/search";
 import * as S from "./styles";
@@ -14,10 +14,10 @@ const Header: React.FC = () => {
   const location = useLocation();
   const { id } = useParams() as { id: string };
 
-  const q = useAppSelector(state => state.movies.params.q);
-  const language = useAppSelector(state => state.movies.params.language);
-  const year = useAppSelector(state => state.movies.params.primary_release_year);
-  const markAdult = useAppSelector(state => state.movies.params.include_adult);
+  const query = useAppSelector(state => state.movies.params.q);
+  const languageState = useAppSelector(state => state.movies.params.language);
+  const yearState = useAppSelector(state => state.movies.params.primary_release_year);
+  const markAdultState = useAppSelector(state => state.movies.params.include_adult);
 
   const callbacks = {
     // отправка запроса на искомые фильмы
@@ -29,19 +29,19 @@ const Header: React.FC = () => {
     // Поиск
     onSearch: useCallback((q: string) => {
       dispatch(setParams({ param: "q", value: q }));
-    }, [q]),
+    }, [query]),
     // Смена языка
     onLanguage: useCallback((language: string) => {
       dispatch(setParams({ param: "language", value: language }));
-    }, [language]),
+    }, [languageState]),
     // Смена года выпуска
     onYear: useCallback((year: string) => {
       dispatch(setParams({ param: "primary_release_year", value: year }));
-    }, [year]),
+    }, [yearState]),
     // Adult or child
     onAdult: useCallback((adult: string) => {
       dispatch(setParams({ param: "include_adult", value: adult }));
-    }, [markAdult]),
+    }, [markAdultState]),
     // page change
     onPage: useCallback(() => {
       dispatch(addCurrentPage(1));
@@ -58,12 +58,12 @@ const Header: React.FC = () => {
         {location.pathname === `/${id}` // если главная страница, то показывать поиск
           ? (
             <>
-            <Search onSubmit={callbacks.onSubmit} value={q} onChangeValue={callbacks.onSearch}
-              options={{ l: languages, y: years, a: adult }}
-              values={{ l: language, y: year, a: markAdult }}
-              handlers={{ onChangeLan: callbacks.onLanguage, onChangeYear: callbacks.onYear, onChangeAdult: callbacks.onAdult }}
-              nameSel={{ l: "languages", y: "years", a: "adult or child" }}/>
-            <ListCategories />
+              <Search onSubmit={callbacks.onSubmit} value={query} onChangeValue={callbacks.onSearch}
+                options={{ l: languages, y: years, a: adultSalect }}
+                values={{ l: languageState, y: yearState, a: markAdultState }}
+                handlers={{ onChangeLan: callbacks.onLanguage, onChangeYear: callbacks.onYear, onChangeAdult: callbacks.onAdult }}
+                nameSel={{ l: "languages", y: "years", a: "adult or child" }}/>
+              <ListCategories />
             </>)
           : null}
       </S.HeaderContainer>

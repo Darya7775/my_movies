@@ -6,10 +6,10 @@ const CheckEmail: React.FC = () => {
     <main>
       <Container>
         <h2>Please check your email</h2>
-        <p> Click the link in the email we've just sent to reset your
+        <p> Click the link in the email we&apos;ve just sent to reset your
             password. It may take a few minutes to arrive.
         </p>
-        <p> Can't find it? Check your spam folder. </p>
+        <p> Can&apos;t find it? Check your spam folder. </p>
       </Container>
     </main>
   );

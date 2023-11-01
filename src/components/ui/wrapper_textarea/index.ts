@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import * as screen from "../../../styles/constants";
 
 const WrapperTextarea = styled.div`
   display: grid;

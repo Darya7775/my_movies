@@ -39,11 +39,11 @@ export interface StateMovies {
     primary_release_year: string,
     page: number
   }
-};
+}
 
 export interface Genres {
   genres: {id: number, name: string}[]
-};
+}
 
 export interface AllMovies {
   results: OneMovieMain[],
@@ -111,7 +111,7 @@ export interface StateOneMoviePage {
   entities: {
     [key: string]: OneMovieMain
   }
-};
+}
 
 export interface FavInMovOne {
   readonly id: number,
@@ -127,7 +127,7 @@ export interface FavInMovOne {
   isFav: boolean
 }
 
-export interface StateFavoritesMovies { arrayMovies: Array<OneMovieMain | FavInMovOne> };
+export interface StateFavoritesMovies { arrayMovies: Array<OneMovieMain | FavInMovOne> }
 
 interface Base {
   id: string,

@@ -16,7 +16,7 @@ const MoviePage: React.FC = () => {
   const [ prompt, setPrompt ] = useState(false);
   const { idmovie } = useParams() as { idmovie: string };
 
-  const movie = useAppSelector(state => state.oneMovie.movie);
+  const movieState = useAppSelector(state => state.oneMovie.movie);
   const recommendationsMovies = useAppSelector(state => state.oneMovie.ids);
   const error = useAppSelector(state => state.oneMovie.error);
   const status = useAppSelector(state => state.oneMovie.status);
@@ -33,26 +33,26 @@ const MoviePage: React.FC = () => {
       dispatch(addMovie(movie));
       addLocalStorageMovie(movie.id, movie);
       setPrompt(true);
-    }, [movie.id]),
+    }, [movieState.id]),
     // удалить фильм из избранного
     onDelete: useCallback((id: number) => {
       dispatch(deleteMovie(id));
       deleteLocalStorageMovie(id);
-    }, [movie.id])
-  }
+    }, [movieState.id])
+  };
 
   let content;
   if(status === "loading") {
     content = <Spinner text="Loading..." />;
   } else if(status === "succeeded") {
     content = <PageCardMovie
-                movie={movie}
-                recommendationsMovieIds={recommendationsMovies}
-                select={selectMovieRecommendById}
-                onAdd={() => callbacks.onAddMovie(movie)}
-                onDelete={() => callbacks.onDelete(movie.id)}
-                markOpen={prompt}
-                auth={auth.currentUser} />;
+      movie={movieState}
+      recommendationsMovieIds={recommendationsMovies}
+      select={selectMovieRecommendById}
+      onAdd={() => callbacks.onAddMovie(movieState)}
+      onDelete={() => callbacks.onDelete(movieState.id)}
+      markOpen={prompt}
+      auth={auth.currentUser} />;
   } else if(status === "failed") {
     content = <Error>{`Check if VPN is enabled: "${error}"`}</Error>;
   }

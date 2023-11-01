@@ -10,20 +10,19 @@ export const InputWrapper = styled.div`
     z-index: 1;
 
     ${(props) => {
-      if(props.children[0].props.value !== '') {
-        return css`
+    if(props.children[0].props.value !== "") {
+      return css`
           top: 2px;
           left: 10px;
           font-size: 0.5em;
           line-height: 120%;
         `;
-      } else {
-        return css`
+    }
+    return css`
           top: 10px;
           left: 10px;
         `;
-      }
-    }}
+  }}
   }
 
   input {

@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useEffect, useState } from "react";
+import React, { forwardRef, memo } from "react";
 import Wrapper from "../../ui/wrapper";
 import ButtonCross from "../../ui/button_cross";
 import * as S from "./styles";
@@ -28,5 +28,7 @@ const Modal = forwardRef<HTMLDivElement, Props>((props, ref) => {
     </S.Ovarlay>
   );
 });
+
+Modal.displayName = "Modal";
 
 export default memo(Modal);

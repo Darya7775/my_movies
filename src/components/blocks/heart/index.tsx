@@ -24,7 +24,7 @@ const Heart: React.FC<Props> = (props: Props) => {
       setFavMov(false);
       props.onDelete && props.onDelete();
     }
-  }
+  };
 
   return(
     <ButtonHeart
@@ -32,7 +32,9 @@ const Heart: React.FC<Props> = (props: Props) => {
       data-fav={favMov ? "true" : "false"}
       aria-label={favMov ? "Remove from favorites" : "Add to favorites"}
       {...(isDesktop ? {title: favMov ? "Remove from favorites" : "Add to favorites"} : {})}
-      onClick={() => {favMov ? callbacks.onDelete() : callbacks.onAdd()}}>
+      onClick={() => {
+        favMov ? callbacks.onDelete() : callbacks.onAdd();
+      }}>
       {props.children}
     </ButtonHeart>
   );

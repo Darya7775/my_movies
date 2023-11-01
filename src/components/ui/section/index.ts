@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Section = styled.section`
   width: 80%;
-  height: 500px;
+  max-height: 500px;
   overflow: auto;
 
   padding: 0 10px;

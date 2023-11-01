@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { StateUser, DataUSer } from "../types";
 
 const initialState: StateUser = {
@@ -20,7 +19,7 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.phoneNumber = action.payload.phoneNumber;
       //  первая буква имени, для аватара
-      state.lettera = action.payload.displayName?.split('')[0];
+      state.lettera = action.payload.displayName?.split("")[0];
     }
   },
 });

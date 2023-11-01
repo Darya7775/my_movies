@@ -7,11 +7,11 @@ import * as T from "../../types";
  * @returns требуемый объект
  */
 
-const createFrom = <T extends {}>(source: T, template: T) => {
-  const target = {} as T;
+const createFrom = <Type extends object>(source: Type, template: Type) => {
+  const target = {} as Type;
 
   for (const key in template) {
-    const keyName = key as keyof T;
+    const keyName = key as keyof Type;
     target[keyName] = source[keyName];
   }
 
@@ -46,9 +46,9 @@ const createMovieFrom = (source: T.FavInMovOne | T.OneMovieMain) => {
     title: "string",
     release_date: "string",
     isFav: true
-  }
+  };
 
   return createFrom(source, template);
-}
+};
 
 export default createMovieFrom;

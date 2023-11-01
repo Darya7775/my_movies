@@ -28,31 +28,32 @@ const ListCategories: React.FC = () => {
   };
 
   const content = categories.map((category, index) => (
-                    <li key={index}>
-                      <S.ButtonCategoriesList disabled={isActive === category.u ? true : false} type="button" onClick={() => {
-                            callbacks.onOpen();
-                            callbacks.onSubmit(category.u);}}>
-                        {category.title}
-                      </S.ButtonCategoriesList>
-                    </li>
-                  ));
+    <li key={index}>
+      <S.ButtonCategoriesList disabled={isActive === category.u} type="button" onClick={() => {
+        callbacks.onOpen();
+        callbacks.onSubmit(category.u);
+      }}>
+        {category.title}
+      </S.ButtonCategoriesList>
+    </li>
+  ));
 
   return(
     <>
       {isMobile
         ? (open
-            ? (<S.Wrapper>
-                <Button type="button" aria-label="close list of categories" onClick={callbacks.onOpen}>
-                  Categories
-                </Button>
-                <S.ListCategories>
-                  {content}
-                </S.ListCategories>
-              </S.Wrapper>)
-            : (<Button type="button" aria-label="open list of categories" onClick={callbacks.onOpen}>
-                Categories
-              </Button>)
-          )
+          ?(<S.Wrapper>
+            <Button type="button" aria-label="close list of categories" onClick={callbacks.onOpen}>
+              Categories
+            </Button>
+            <S.ListCategories>
+              {content}
+            </S.ListCategories>
+          </S.Wrapper>)
+          : (<Button type="button" aria-label="open list of categories" onClick={callbacks.onOpen}>
+              Categories
+          </Button>)
+        )
         : (<S.ListCategories>{content}</S.ListCategories>)
       }
     </>

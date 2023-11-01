@@ -18,7 +18,7 @@ const ListMovies: React.FC = () => {
   // параметры
   const choosedCategory = useAppSelector(state => state.movies.choosedCategory);
   const currentPage = useAppSelector(state => state.movies.params.page);
-  const query = useAppSelector(state => state.movies.params.q);
+  const queryState = useAppSelector(state => state.movies.params.q);
   const adult = useAppSelector(state => state.movies.params.include_adult);
   const lang = useAppSelector(state => state.movies.params.language);
   const year = useAppSelector(state => state.movies.params.primary_release_year);
@@ -36,24 +36,23 @@ const ListMovies: React.FC = () => {
     }, []),
     // генератор ссылки для пагинатора
     makePaginatorLink: useCallback((page: number) => {
-      if(query) {
+      if(queryState) {
         // query=&include_adult=&language=&primary_release_year=&page=
-        return `/search?${new URLSearchParams({ query: query, include_adult: adult, language: lang, primary_release_year: year, page: String(page) })}`
-      } else {
-        // language=&page=
-        return `/${choosedCategory}?${new URLSearchParams({ language: lang, page: String(page) })}`;
+        return `/search?${new URLSearchParams({ query: queryState, include_adult: adult, language: lang, primary_release_year: year, page: String(page) })}`;
       }
-    }, [query, adult, lang, year, choosedCategory])
-  }
+      // language=&page=
+      return `/${choosedCategory}?${new URLSearchParams({ language: lang, page: String(page) })}`;
+    }, [ queryState, adult, lang, year, choosedCategory ])
+  };
 
   let content;
   if(status === "loading") {
     content = <Spinner text="Loading..." />;
   } else if(status === "succeeded") {
     content = <>
-                <MoviesList moviesIds={moviesIds} select={selectMovieById} />
-                <Pagination link={callbacks.makePaginatorLink} currentPage={Number(currentPage)} count={count} onhandler={callbacks.onPaginate} />
-              </>;
+      <MoviesList moviesIds={moviesIds} select={selectMovieById} />
+      <Pagination link={callbacks.makePaginatorLink} currentPage={Number(currentPage)} count={count} onhandler={callbacks.onPaginate} />
+    </>;
   } else if(status === "failed") {
     content = <Error>{`Check if VPN is enabled: "${error}"`}</Error>;
   }
