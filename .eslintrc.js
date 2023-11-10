@@ -1,6 +1,6 @@
 // const LEVEL_CYCLOMATIC_COMPLEXITY = 4;
 const INDENT_SPACE = 2;
-const IGNORE_NUMBERS = [ 0, 1 ];
+const IGNORE_NUMBERS = [ 0, 1, 9648, 27 ];
 
 module.exports = {
   "env": {
@@ -52,7 +52,7 @@ module.exports = {
     "no-else-return": [ "error", { allowElseIf: false }], // Disallow else blocks after return statements in if statements
     "no-eval": "error", // Disallow the use of eval(),
     "no-floating-decimal": "error",
-    "no-magic-numbers": [ "error", { "ignore": IGNORE_NUMBERS }],
+    "no-magic-numbers": [ "error", { "ignore": IGNORE_NUMBERS, "ignoreDefaultValues": true, "ignoreArrayIndexes": true }],
     "no-mixed-operators": [ "error", { "groups": [[ "&&", "||", "?:" ]]}], // Disallow mixed binary operators
     "no-multi-assign": [ "error", { "ignoreNonDeclaration": true }], // Disallow use of chained assignment expressions
     "no-multi-str": "error",

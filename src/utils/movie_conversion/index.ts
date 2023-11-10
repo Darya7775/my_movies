@@ -1,13 +1,6 @@
 import * as T from "../../types";
 
-/**
- * преобразование данных о фильмах
- * @param data объект c данными о фильмах, где genres - массив с id жанров
- * @param dataGenres объект c массивом жанров и их id
- * @returns объект, где genres - массив с названиями жанров
- */
-
-export const conversionMovie = (dataArray: T.OneMovieMain[], dataGenres: T.Genres) => {
+export const changeArray = (dataArray: T.OneMovieMain[], dataGenres: T.Genres) => {
   let getArray = dataArray;
 
   // преобразование жанров в обЪект
@@ -21,6 +14,19 @@ export const conversionMovie = (dataArray: T.OneMovieMain[], dataGenres: T.Genre
     movie.genre_ids = movie.genre_ids.reduce((acc, curGenge) => (acc.push(normalGenres[curGenge]), acc), [] as string[]);
     return movie;
   });
+
+  return getArray;
+};
+
+/**
+ * преобразование данных о фильмах
+ * @param data объект c данными о фильмах, где genres - массив с id жанров
+ * @param dataGenres объект c массивом жанров и их id
+ * @returns объект, где genres - массив с названиями жанров
+ */
+
+export const conversionMovie = (dataArray: T.OneMovieMain[], dataGenres: T.Genres) => {
+  const getArray = changeArray(dataArray, dataGenres);
 
   // добавление флага в/не избранном
   let favMov = {} as { [key: string]: object };
