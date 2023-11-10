@@ -29,7 +29,7 @@ const Heart: React.FC<Props> = (props: Props) => {
   return(
     <ButtonHeart
       type="button"
-      data-fav={favMov ? "true" : "false"}
+      data-fav={favMov}
       aria-label={favMov ? "Remove from favorites" : "Add to favorites"}
       {...(isDesktop ? {title: favMov ? "Remove from favorites" : "Add to favorites"} : {})}
       onClick={() => {

@@ -33,7 +33,7 @@ module.exports = {
     "@typescript-eslint",
     "react"
   ],
-  "ignorePatterns": [ "webpack.config.js", "*.svg" ],
+  "ignorePatterns": [ "webpack.config.js", "*.svg", "fileTransformer.js" ],
   "rules": {
     "indent": [ "error", INDENT_SPACE ],
     "linebreak-style": [ "warn", "unix" ],
