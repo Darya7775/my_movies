@@ -27,7 +27,7 @@ const ListMovies: React.FC = () => {
     // Пагинация
     onPaginate: useCallback(async(number: number) => {
       dispatch(addCurrentPage(number));
-      const query = store.getState().movies.params.q;
+      const query = store().getState().movies.params.q;
       if(query) {
         await dispatch(fetchSearchMovie(false));
       } else {

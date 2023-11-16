@@ -1,21 +1,28 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, PreloadedState } from "@reduxjs/toolkit";
 import userReducer from "./slices_redux/user_slice";
 import moviesReducer from "./slices_redux/movie_slice";
 import oneMovieReducer from "./slices_redux/one_movie_slice";
 import favoritesMoviesReducer from "./slices_redux/favorites_movies_slice";
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-    movies: moviesReducer,
-    oneMovie: oneMovieReducer,
-    favoritesMovies: favoritesMoviesReducer
-  },
+// Create the root reducer independently to obtain the RootState type
+const rootReducer = combineReducers({
+  user: userReducer,
+  movies: moviesReducer,
+  oneMovie: oneMovieReducer,
+  favoritesMovies: favoritesMoviesReducer
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState
+  });
+};
 
-export default store;
+export type RootState = ReturnType<typeof rootReducer>
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore["dispatch"]
 
-export const state = store.getState();
+export default setupStore;
+
+export const state = setupStore().getState();

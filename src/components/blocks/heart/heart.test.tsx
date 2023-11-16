@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../hooks/use-match-media/matchMedia.mock";
+import "../../../mock-data/matchMedia.mock";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Heart from ".";
