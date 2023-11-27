@@ -6,6 +6,7 @@ import { renderWithProvidersAndBrowserRouter } from "../../../utils/test_utils";
 import { addLocalStorageMovie } from "../../../utils/local_storage";
 import "../../../mock-data/matchMedia.mock";
 import arrayOneMovieMain from "../../../mock-data/array_one_movie_main.mock";
+import { Route } from "react-router-dom";
 import FavoritesMovies from ".";
 
 describe("FavoritesMovies page component", () => {
@@ -15,7 +16,11 @@ describe("FavoritesMovies page component", () => {
     addLocalStorageMovie(arrayOneMovieMain[1].id, arrayOneMovieMain[1]);
     addLocalStorageMovie(arrayOneMovieMain[2].id, arrayOneMovieMain[2]);
 
-    renderWithProvidersAndBrowserRouter(<FavoritesMovies />, { preloadedState: {favoritesMovies: { arrayMovies: arrayOneMovieMain}}});
+    renderWithProvidersAndBrowserRouter(
+      <Route path={"/movies"} element={<FavoritesMovies />} />,
+      "/movies",
+      { preloadedState: {favoritesMovies: { arrayMovies: arrayOneMovieMain}}}
+    );
 
     const items = screen.getAllByRole("listitem");
     expect(items).toHaveLength(arrayOneMovieMain.length);
@@ -37,7 +42,11 @@ describe("FavoritesMovies page component", () => {
     addLocalStorageMovie(arrayOneMovieMain[1].id, arrayOneMovieMain[1]);
     addLocalStorageMovie(arrayOneMovieMain[2].id, arrayOneMovieMain[2]);
 
-    renderWithProvidersAndBrowserRouter(<FavoritesMovies />, { preloadedState: {favoritesMovies: { arrayMovies: arrayOneMovieMain}}});
+    renderWithProvidersAndBrowserRouter(
+      <Route path={"/movies"} element={<FavoritesMovies />} />,
+      "/movies",
+      { preloadedState: {favoritesMovies: { arrayMovies: arrayOneMovieMain}}}
+    );
 
     const items = screen.getAllByRole("listitem");
     expect(items).toHaveLength(arrayOneMovieMain.length);

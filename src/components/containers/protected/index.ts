@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAppSelector from "../../../hooks/use-selector";
 
 interface Props {
@@ -9,20 +9,26 @@ interface Props {
 
 const Protected: React.FC<Props> = (props: Props) => {
 
-  const name = useAppSelector(state => state.user.displayName);
+  const email = useAppSelector(state => state.user.email);
+  console.log(email);
+  // @todo при перезагрузке отправляет на login
 
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const redirect = () => {
+    console.log("outside", email);
+    if (!email) {
+      console.log(!email);
+      navigate(props.redirect);
+    }
+  };
 
   useEffect(() => {
-    if (!name) {
-      navigate(props.redirect, {state: { back: location.pathname }});
-    }
-  }, [name]);
+    window.addEventListener("onload", redirect);
 
-  if(!name) {
-    return null;
-  }
+    return window.removeEventListener("onload", redirect);
+  }, [email]);
+
   return props.children;
 };
 

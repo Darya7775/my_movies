@@ -19,6 +19,7 @@ const Authorization: React.FC = () => {
     // подписка на обновление user
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       // получение данных в state Redux
+      console.log(user?.email);
       dispatch(getDataUser({displayName: user?.displayName, phoneNumber: user?.phoneNumber, email: user?.email}));
     });
     return unsubscribe;

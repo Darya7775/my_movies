@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Ovarlay = styled.div`
   position: fixed;
-  display: flex;
+
   justify-content: center;
   top: 0;
   left: 0;
@@ -11,6 +11,14 @@ export const Ovarlay = styled.div`
   background-color: rgba(0,0,0, .8);
   z-index: 1000;
   overflow-y: auto;
+
+  &[data-show="true"] {
+    display: flex;
+  }
+
+  &[data-show="false"] {
+    display: none;
+  }
 `;
 
 export const Modal = styled.div`

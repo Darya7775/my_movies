@@ -24,6 +24,7 @@ const WrapperInput = styled.div`
 
     @media (min-width: ${screen._768_PX}) {
       background: url(${prompt}) 0 100% no-repeat;
+
       width: 24px;
       height: 24px;
       border: none;

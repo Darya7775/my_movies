@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase/firebase";
 import useMactchMedia from "../../../hooks/use-match-media";
+import useAppDispatch from "../../../hooks/use-dispatch";
+import { getDataUser } from "../../../slices_redux/user_slice";
 
 import Button from "../../ui/button";
 import WrapperInput from "../../ui/wrapper_input";
@@ -18,10 +20,10 @@ import eyeClose from "../../../assets/eye_close.svg";
 type FormValues = {
   register_email: string
   register_password: string
-  register_password_confirm: string
 }
 
 const Register: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isMobile } = useMactchMedia() as { isMobile: boolean };
 
@@ -37,6 +39,7 @@ const Register: React.FC = () => {
     onSubmit: useCallback(async (user: FormValues) => {
       try {
         await createUserWithEmailAndPassword(auth, user.register_email, user.register_password);
+        dispatch(getDataUser({displayName: "", phoneNumber: "", email: user.register_email}));
         navigate("/data_user");
       } catch (e: unknown) {
         const knownError = e as {message: string};
@@ -45,7 +48,8 @@ const Register: React.FC = () => {
     }, []),
     // ошибка при отправлении
     onError: useCallback((errors: FieldErrors<FormValues>) => {
-      console.log(errors);
+      setError(errors.register_email?.message as string);
+      setError(errors.register_password?.message as string);
     }, []),
     // открытие/закрытие пароля
     onPassword: () => setShow(!show),

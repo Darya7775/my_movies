@@ -19,10 +19,19 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.phoneNumber = action.payload.phoneNumber;
       //  первая буква имени, для аватара
-      state.lettera = action.payload.displayName?.split("")[0];
-    }
+      state.lettera = action.payload.displayName ? action.payload.displayName.split("")[0] : action.payload.email?.split("")[0];
+    },
+    deleteUserRedux: (state) => {
+      state.displayName = "";
+      state.email = "";
+      state.phoneNumber = "";
+      state.lettera = "";
+    },
+    updateUserRedux: (state, action: PayloadAction<{ displayName: string }>) => {
+      state.displayName = action.payload.displayName;
+    },
   },
 });
 
 export default authSlice.reducer;
-export const { getDataUser } = authSlice.actions;
+export const { getDataUser, deleteUserRedux, updateUserRedux } = authSlice.actions;

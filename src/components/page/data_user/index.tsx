@@ -1,11 +1,13 @@
 import React, { useCallback, useState, memo } from "react";
-import { updateProfile, User, deleteUser } from "firebase/auth";
+import { updateProfile, User } from "firebase/auth";
 import { auth } from "../../../firebase/firebase";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import debounce from "lodash.debounce";
 import delay from "../../../utils/delay";
+import { updateUserRedux } from "../../../slices_redux/user_slice";
+import useAppDispatch from "../../../hooks/use-dispatch";
 
+import ModalConfirm from "../../containers/modal_confirm";
 import Button from "../../ui/button";
 import WrapperInput from "../../ui/wrapper_input";
 import Container from "../../ui/container";
@@ -15,17 +17,17 @@ import Success from "../../ui/success";
 
 type FormValues = {
   name: string,
-  url: string
+  url: string,
 }
 
 const DataUser: React.FC = () => {
-  const DELAY = 1500;
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [ errorFetch, setErrorFetch ] = useState("");
   const [ success, setSuccess ] = useState("");
-  const [ errorDelete, setErrorDelete ] = useState("");
   const [ successDelete, setSuccessDelete ] = useState("");
+  const [ showModal, setShowModal ] = useState(false);
 
   const { register, formState, handleSubmit } = useForm<FormValues>({
     defaultValues: {
@@ -40,6 +42,7 @@ const DataUser: React.FC = () => {
     onSubmit: useCallback(async (user: FormValues) => {
       try {
         await updateProfile(auth.currentUser as User, { displayName: user.name, photoURL: user.url });
+        dispatch(updateUserRedux({ displayName: user.name }));
         setSuccess("Data updated successfully");
       } catch (error: unknown) {
         const knownError = error as {message: string};
@@ -50,19 +53,6 @@ const DataUser: React.FC = () => {
         navigate("/register");
       }
     }, [auth.currentUser]),
-    // delete пользователя
-    onDelete: useCallback(async () => {
-      try {
-        await deleteUser(auth.currentUser as User);
-        setSuccessDelete("Account delete successfully");
-        const deb = debounce(() => navigate("/register"), DELAY);
-        deb();
-      } catch (error: unknown) {
-        const knownError = error as {message: string};
-        setErrorDelete(knownError.message.split(":")[1]);
-        navigate("/login");
-      }
-    }, [auth.currentUser])
   };
 
   return(
@@ -72,7 +62,6 @@ const DataUser: React.FC = () => {
           {success &&  delay(<Success>{success}</Success>, setSuccess)}
           {errorFetch && <Error>{errorFetch}</Error>}
           {successDelete && delay(<Success>{successDelete}</Success>, setSuccessDelete)}
-          {errorDelete && <Error>{errorDelete}</Error>}
 
           <WrapperInput>
             <label htmlFor="name">Name</label>
@@ -101,9 +90,11 @@ const DataUser: React.FC = () => {
           </WrapperInput>
 
           <Button type="submit" disabled={!isValid || isSubmitting}>Send</Button>
-          <Button data-red="true" type="button" onClick={callbacks.onDelete}>Delete account</Button>
-
+          <Button data-red="true" type="button" onClick={() => setShowModal(true)}>Delete account</Button>
         </Form>
+
+        <ModalConfirm showModal={showModal} handlerShowModal={setShowModal} handlerSuccess={setSuccessDelete} />
+
       </Container>
     </main>
   );

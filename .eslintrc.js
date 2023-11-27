@@ -9,7 +9,8 @@ module.exports = {
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:jest-dom/recommended"
   ],
   "overrides": [
     {
@@ -31,7 +32,9 @@ module.exports = {
   },
   "plugins": [
     "@typescript-eslint",
-    "react"
+    "react",
+    "testing-library",
+    "jest-dom"
   ],
   "ignorePatterns": [ "webpack.config.js", "*.svg", "fileTransformer.js" ],
   "rules": {

@@ -14,7 +14,7 @@ interface Props {
 
 const Modal = forwardRef<HTMLDivElement, Props>((props, ref) => {
   return (
-    <S.Ovarlay ref={ref}>
+    <S.Ovarlay data-show={props.state} ref={ref}>
       <S.Modal>
         <Wrapper>
           <Wrapper>
