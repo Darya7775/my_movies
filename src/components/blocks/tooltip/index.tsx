@@ -13,7 +13,7 @@ const Tooltip: React.FC<Props> = (props: Props) => {
   useEffect(() => setOpen(props.markOpen), [props.markOpen]);
 
   return(
-    <S.TooltipStyles data-show={open ? "true" : "false"}>
+    <S.TooltipStyles data-show={open}>
       <LinkStyle to="/login">Log in</LinkStyle> or
       <LinkStyle to="/register">Register</LinkStyle> to view your favorite films
       <ButtonCross type="button" onClick={() => setOpen(false)} aria-label="Close tooltip"></ButtonCross>

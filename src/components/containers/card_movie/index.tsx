@@ -5,7 +5,7 @@ import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
 import { addMovie, deleteMovie } from "../../../slices_redux/favorites_movies_slice";
 import { addLocalStorageMovie, deleteLocalStorageMovie } from "../../../utils/local_storage";
-import noPoster from "../../../assets/no_poster.png";
+import NoPoster from "../../blocks/img_no_poster";
 import Heart from "../../blocks/heart";
 import * as T from "../../../types";
 import * as S from "./styles";
@@ -41,7 +41,10 @@ const CardMovie: React.FC<Props> = (props: Props) => {
         ?(<S.WrapperMovieStyle>
           {auth.currentUser === null && <Tooltip markOpen={prompt}/>}
           <S.LinkImg to={`/movie/${props.movieId}`}>
-            <S.ImgPoster src={movieState.poster_path !== null ? `https://image.tmdb.org/t/p/w300/${movieState.poster_path}` : noPoster} alt="Poster" width={300} height={450} />
+            {movieState.poster_path !== null
+              ? <S.ImgPoster src={`https://image.tmdb.org/t/p/w300/${movieState.poster_path}`} alt="Poster" width={300} height={450} />
+              : <NoPoster width={300} height={450} card={true} />
+            }
           </S.LinkImg>
           <S.LinkTitle to={`/movie/${props.movieId}`}>
             <h2>{movieState.title}</h2>
@@ -53,7 +56,7 @@ const CardMovie: React.FC<Props> = (props: Props) => {
           </Heart>
           <S.Year>{movieState.release_date?.split("-")[0]}</S.Year>
           <S.ListGenres>{movieState.genre_ids?.join(", ")}</S.ListGenres>
-          {movieState.vote_average !== 0 && <S.MovieRating>{movieState.vote_average.toFixed(1)}</S.MovieRating>}
+          {movieState.vote_average > 0 && <S.MovieRating>{movieState.vote_average.toFixed(1)}</S.MovieRating>}
         </S.WrapperMovieStyle>)
         : (<div>No movie</div>)
       }

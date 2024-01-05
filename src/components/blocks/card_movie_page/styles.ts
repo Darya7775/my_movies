@@ -118,12 +118,6 @@ export const WrapperMovie = styled.div`
   }
 `;
 
-export const ImgMovie = styled.img`
-  width: 100%;
-  object-fit: contain;
-  float: left;
-`;
-
 export const WrapperYear = styled.div`
   text-align: center;
   gap: 10px;
@@ -254,4 +248,10 @@ export const ImgCast = styled.img`
   width: 100%;
   object-fit: contain;
   height: auto;
+`;
+
+export const ImgMovie = styled.img`
+  width: 100%;
+  object-fit: contain;
+  float: left;
 `;

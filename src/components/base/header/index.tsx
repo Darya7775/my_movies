@@ -3,7 +3,9 @@ import { useLocation, useParams } from "react-router-dom";
 import useAppDispatch from "../../../hooks/use-dispatch";
 import useAppSelector from "../../../hooks/use-selector";
 import { fetchSearchMovie, setParams, addCurrentPage } from "../../../slices_redux/movie_slice";
-import logo from "../../../assets/movies_logo.png";
+import logoPng from "../../../assets/logo/movies_logo.png";
+import logoWebp from "../../../assets/logo/movies_logo.webp";
+import logoAvif from "../../../assets/logo/movies_logo.avif";
 import { languages, years, adultSalect } from "../../../assets/data/filters";
 import ListCategories from "../../containers/list_categories";
 import Search from "../../blocks/search";
@@ -52,7 +54,11 @@ const Header: React.FC = () => {
     <S.Header>
       <S.HeaderContainer>
         <S.Logo to="/" onClick={callbacks.onPage}>
-          <img src={logo} alt="Logo" width={40} height={40}/>
+          <picture>
+            <source type="image/avif" srcSet={logoAvif} />
+            <source type="image/webp" srcSet={logoWebp} />
+            <img src={logoPng} alt="Logo" width={40} height={40}/>
+          </picture>
           <span>My Movie</span>
         </S.Logo>
         {location.pathname === `/${id}` // если главная страница, то показывать поиск

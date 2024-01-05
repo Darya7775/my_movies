@@ -1,10 +1,10 @@
 import React, { memo, useRef } from "react";
 import useMactchMedia from "../../../hooks/use-match-media";
 import MovieReviews from "../../containers/movie_ reviews";
-import noPoster from "../../../assets/no_poster.png";
+import NoPoster from "../img_no_poster";
 import contryes from "../../../assets/data/flags_data";
-import woman from "../../../assets/woman.jpg";
-import man from "../../../assets/man.jpg";
+import { Woman, Man } from "../img_womeen_men";
+// import man from "../../../assets/caps/man.jpg";
 import ListRecommendations from "../list_card";
 import Slider from "../slider";
 import MyYouTube from "../youtube";
@@ -46,8 +46,13 @@ const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select, onAdd, 
 
       <S.ContainerPageMovie>
         {isMobile
-          ? (<S.ImgMovie src={movie.backdrop_path !== null ? `https://image.tmdb.org/t/p/w300/${movie.backdrop_path}` : noPoster} alt="Poster" width={320} height={170} />)
-          : (<S.ImgMovie src={movie.poster_path !== null ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}` : noPoster} alt="Poster" width={500} height={600} />)}
+          ? movie.backdrop_path !== null // if have backdrop_path => with backdrop_path
+            ? (<S.ImgMovie src={`https://image.tmdb.org/t/p/w300/${movie.backdrop_path}`} alt="Poster" width={320} height={170} />)
+            : <NoPoster width={320} height={170} />
+          : movie.poster_path !== null
+            ? (<S.ImgMovie src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} alt="Poster" width={500} height={600} />)
+            : <NoPoster width={500} height={600} />
+        }
         <S.WrapperMovie>
           <h2>{movie.title}</h2>
 
@@ -106,7 +111,7 @@ const Card: React.FC<Props> = ({ movie, recommendationsMovieIds, select, onAdd, 
             <S.TemplateCast>
               {item.profile_path
                 ? (<S.ImgCast src={`https://image.tmdb.org/t/p/w300/${item.profile_path}`} alt="Foto" width={100} height={150} />)
-                : (<S.ImgCast src={item.gender === 1 ? woman : man }></S.ImgCast>)
+                : (item.gender === 1 ? <Woman /> : <Man />)
               }
               <h4>{item.original_name}</h4>
               <p>{item.character ? item.character : item.job}</p>

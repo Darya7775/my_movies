@@ -11,7 +11,9 @@ export const changeArray = (dataArray: T.OneMovieMain[], dataGenres: T.Genres) =
 
   // замена массива жанров с числами на массив жанров с названиями
   getArray = dataArray.map(movie => {
-    movie.genre_ids = movie.genre_ids.reduce((acc, curGenge) => (acc.push(normalGenres[curGenge]), acc), [] as string[]);
+    if(movie.genre_ids) {
+      movie.genre_ids = movie.genre_ids.reduce((acc, curGenge) => (acc.push(normalGenres[curGenge]), acc), [] as string[]);
+    }
     return movie;
   });
 

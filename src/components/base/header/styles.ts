@@ -61,8 +61,4 @@ export const Logo = styled(Link)`
       display: block;
     }
   }
-
-  /* @media (min-width: ${screen._1024_PX}) {
-    grid-area: 1/1/-1/2;
-  } */
 `;
